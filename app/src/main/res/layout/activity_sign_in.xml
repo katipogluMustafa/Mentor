@@ -95,13 +95,11 @@
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/activity_sign_in_facebook_imageButton"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="30dp"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/sign_in_facebook"
-                android:paddingStart="65dp"
-                android:paddingEnd="65dp"
-                android:background="@drawable/bg_empty" />
+                android:layout_height="0dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="15sp"
+                android:paddingBottom="15dp"
+                android:layout_weight="1" />
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/activity_sign_in_google_plus_imageButton"
                 android:layout_width="0dp"
@@ -109,6 +107,28 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_empty"
                 android:src="@drawable/sign_in_google_plus" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:padding="20dp"
+            android:id="@+id/activity_sig_in_anonymous_login_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/activity_sign_in_anonymous_log_in_btn"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Continue As Anonymous"
+                android:fontFamily="@font/gothamroundedbold"
+                android:textColor="@color/colorAccent"
+                android:background="@drawable/bg_empty"
+                />
+
 
         </LinearLayout>
 

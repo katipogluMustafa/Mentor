@@ -66,7 +66,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private Button logInButton;
     private SignInButton googlePlusImageButton;
     private TextView createAccountTextView;
-
+    private Button anonLoginBtn;
 
 
     @Override
@@ -142,6 +142,28 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this,gso);
+
+        // Anonymous login
+        anonLoginBtn = findViewById(R.id.activity_sign_in_anonymous_log_in_btn);
+        anonLoginBtn.setOnClickListener(v->{
+            mAuth.signInAnonymously()
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("DEBUG", "signInAnonymously:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("DEBUG", "signInAnonymously:failure", task.getException());
+                            Toast.makeText(SignInActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    });
+        });
+
+
     }
 
 

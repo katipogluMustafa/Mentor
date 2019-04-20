@@ -14,4 +14,6 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
     }
+
+    //TODO: Check whether the user is anonymous and require strict login to take new appointment
 }
