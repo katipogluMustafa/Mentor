@@ -192,12 +192,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
 
         switch (v.getId()) {
-
             case R.id.activity_sign_in_remember_radioButton:
-                if (((RadioButton) v).isChecked())
-                    ((RadioButton) v).setChecked(false);
-                else
-                    ((RadioButton) v).setChecked(true);
+                ((RadioButton) v).setChecked(!((RadioButton) v).isChecked());
                 break;
 
             case R.id.activity_sign_in_forget_password_textView:
