@@ -21,6 +21,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -121,7 +122,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(context,R.string.facebook_error,Toast.LENGTH_LONG).show();
             }
         });
-        facebookLoginButton.setOnClickListener(v -> handleFacebookAccessToken(AccessToken.getCurrentAccessToken()));
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
