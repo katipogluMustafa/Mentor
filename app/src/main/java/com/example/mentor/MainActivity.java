@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void handleLogOutButton() {
-        LoginManager.getInstance().logOut();
-        mAuth.signOut();
+        LoginManager.getInstance().logOut();        // Facebook Connection Log out
+        FirebaseAuth.getInstance().signOut();       // Firebase Connection Log out
         startActivity(new Intent(this,SignInActivity.class));
         finish();
     }

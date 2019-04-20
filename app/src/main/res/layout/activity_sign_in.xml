@@ -102,14 +102,14 @@
                 android:paddingStart="65dp"
                 android:paddingEnd="65dp"
                 android:background="@drawable/bg_empty" />
-
-            <ImageButton
+            <com.google.android.gms.common.SignInButton
                 android:id="@+id/activity_sign_in_google_plus_imageButton"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_empty"
                 android:src="@drawable/sign_in_google_plus" />
+
         </LinearLayout>
 
 
