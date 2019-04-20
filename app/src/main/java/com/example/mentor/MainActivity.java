@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import com.google.firebase.auth.FirebaseAuth;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private FirebaseAuth mAuth;
     private CardView doctorsCardView;
     private CardView newsCardView;
     private CardView appointmentsCardView;
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mAuth = FirebaseAuth.getInstance();
         setUp();
 
     }
@@ -36,7 +38,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appointmentsCardView.setOnClickListener(this);
         myProfileCardView.setOnClickListener(this);
         logOutCardView.setOnClickListener(this);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null)
+        if( mAuth.getCurrentUser() == null )
+            startActivity(new Intent(this,SignInActivity.class));
     }
 
     @Override
@@ -58,17 +67,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, UserProfileActivity.class));
                 break;
             case R.id.activity_main_logOut_cardView:
-                finish();
-                startActivity(new Intent(this, SignInActivity.class));
+                handleLogOutButton();
                 break;
 
         }
 
     }
 
-    private boolean handleLogOutButton() {
-        //TODO: Log-out button was clicked!
-        return false;
+    private void handleLogOutButton() {
+        mAuth.signOut();
+        startActivity(new Intent(this,SignInActivity.class));
+        finish();
     }
 
 

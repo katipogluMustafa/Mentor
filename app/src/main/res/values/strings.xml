@@ -58,8 +58,6 @@
     <string name="calling">Calling...</string>
 
 
-
-
     <string name="review_user_name">Lina Rose</string>
     <string name="review_user_review">The Good Doctor would really like to make you feel good. And that\'s not always a good thing. ABC\'s new medical drama</string>
     <string name="review_date">(16-04-2019)</string>
@@ -97,6 +95,8 @@
     <string name="button_text_withdraw">Withdraw</string>
     <string name="msg_account_not_found">The username and password you entered did not match our records. Please double-check and try again.</string>
     <string name="error_message">An error has occured!</string>
+
+
 
 
 </resources>
