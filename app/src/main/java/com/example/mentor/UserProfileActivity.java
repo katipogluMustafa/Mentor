@@ -17,4 +17,5 @@ public class UserProfileActivity extends AppCompatActivity {
 
     //TODO: Check whether the user is anonymous and require strict login to take new appointment
     //TODO: Require email verification, take a look at here : https://firebase.googleblog.com/2017/02/email-verification-in-firebase-auth.html
+    //TODO: After completing required information, convert anonymous account to normal account : https://firebase.google.com/docs/auth/android/anonymous-auth?authuser=2
 }
