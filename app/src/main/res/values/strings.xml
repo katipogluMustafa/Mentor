@@ -95,7 +95,8 @@
     <string name="button_text_withdraw">Withdraw</string>
     <string name="msg_account_not_found">The username and password you entered did not match our records. Please double-check and try again.</string>
     <string name="error_message">An error has occured!</string>
-
+    <string name="password_mismatch">Passwords does not match!</string>
+    <string name="short_password">Password needs to be at least 6 character long</string>
 
 
 </resources>

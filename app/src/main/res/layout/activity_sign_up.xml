@@ -43,34 +43,35 @@
         android:layout_marginStart="55dp"
         android:layout_marginEnd="55dp"
         android:layout_marginBottom="100dp"
-
+        android:layout_marginTop="50dp"
         android:divider="@drawable/divider2"
         android:gravity="center"
         android:orientation="vertical"
         android:showDividers="middle">
-
+<!--
         <EditText
             android:id="@+id/activity_signUp_name_editText"
             style="@style/edit_text_style"
             android:layout_width="match_parent"
             android:hint="@string/edit_text_hint_name"
             android:inputType="textPersonName" />
-
+-->
         <EditText
             android:id="@+id/activity_signUp_email_editText"
             style="@style/edit_text_style"
             android:layout_width="match_parent"
+            android:layout_gravity="center"
             android:hint="@string/edit_text_hint_email"
             android:inputType="textEmailAddress" />
 
-
+<!--
         <EditText
             android:id="@+id/activity_signUp_mobileNumber_editText"
             style="@style/edit_text_style"
             android:layout_width="match_parent"
             android:hint="@string/edit_text_hint_phone_number"
             android:inputType="phone" />
-
+-->
 
         <EditText
             android:id="@+id/activity_signUp_password_editText"
@@ -86,6 +87,8 @@
             android:layout_width="match_parent"
             android:hint="@string/edit_text_hint_confirm_password"
             android:inputType="textPassword" />
+
+        <!-- TODO: Tasarımı Güncelle -->
 
         <Button
             android:id="@+id/activity_signUp_signUp_button"
