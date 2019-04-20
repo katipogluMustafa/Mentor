@@ -49,7 +49,7 @@
             android:background="@drawable/bg_user_profile" />
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/doctor_imageView"
+            android:id="@+id/doctor_main_photo"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
@@ -64,7 +64,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/user_profile_username_textview"
+                android:id="@+id/profile_user_prioritized_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -82,7 +82,7 @@
                 android:id="@+id/user_profile_account_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/user_profile_username_textview"
+                android:layout_below="@id/profile_user_prioritized_name"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/bg_empty"
                 android:gravity="center"
@@ -115,6 +115,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/account_monetary_unit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="2dp"
@@ -122,6 +123,7 @@
                             android:text="@string/dollar_sign" />
 
                         <TextView
+                            android:id="@+id/profile_account_ballance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gothamroundedbold"
@@ -147,6 +149,7 @@
                     android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/profile_deposit_btn"
                         style="@style/button_style"
                         android:layout_width="120dp"
                         android:layout_marginBottom="10dp"
@@ -154,10 +157,11 @@
                         android:text="@string/button_text_deposit" />
 
                     <Button
+                        android:id="@+id/profile_withdraw_btn"
                         style="@style/button_style"
                         android:layout_width="120dp"
-                        android:width="30dp"
                         android:layout_marginBottom="10dp"
+                        android:width="30dp"
                         android:text="@string/button_text_withdraw" />
 
 
@@ -203,6 +207,7 @@
 
 
                         <TextView
+                            android:id="@+id/profile_age"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gothamroundedbold"
@@ -236,6 +241,7 @@
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/profile_blood"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gothamroundedbold"
@@ -262,6 +268,7 @@
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/profile_gender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gothamroundedbold"
@@ -273,10 +280,23 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/profile_user_actual_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name" />
+
+                <TextView
+                    android:id="@+id/profile_user_actual_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Surname" />
+
 
             </LinearLayout>
 
             <Button
+                android:id="@+id/profile_home_btn"
                 style="@style/button_style"
                 android:layout_width="250dp"
                 android:layout_alignParentBottom="true"
