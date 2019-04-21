@@ -38,13 +38,13 @@ public class DatabaseConnector {
         return null;
     }
 
-    public void uploadUserDetails(Map<String,Object> user_details){
+    public boolean uploadUserDetails(Map<String,Object> user_details){
         String uid = currentUser.getUid();
         if( currentUser == null || uid == null){
             Log.d("DEBUG", "Error while uploading user details: User not found");
         }
         CollectionReference user_packs = db.collection("user_packs");
-        user_packs.document(uid).set(user_details);
+        return user_packs.document(uid).set(user_details).isSuccessful();
     }
 
     public FirebaseFirestore getDb() {

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -80,7 +81,11 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     }
 
     public void updateFields(Map<String,Object> user_details){
-        Uri profile_photo_uri = (Uri)user_details.get("photo_link");
+        if( user_details == null) {
+           Log.d("DEBUG", "Can't update fields, null user details");
+            return;
+        }
+ //       Uri profile_photo_uri = (Uri)user_details.get("photo_link");
         String prioritized_name_s = (String)user_details.get("prioritized_name");
         String age_s = (String)user_details.get("age");
         String gender_s = (String)user_details.get("gender");
@@ -89,7 +94,7 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         String surname_s = (String)user_details.get("surname");
 
         // Default Value Assignments
-        if( profile_photo_uri != null ) profile_photo.setImageURI( profile_photo_uri ); else profile_photo.setImageResource(R.drawable.test_doctor_1);
+//        if( profile_photo_uri != null ) profile_photo.setImageURI( profile_photo_uri ); else profile_photo.setImageResource(R.drawable.test_doctor_1);
         if( prioritized_name_s == null )  prioritized_name_s = "Dr Anonymous";
         if( age_s == null  ) age_s = "0";
         if( gender_s == null) gender_s = "Male";
@@ -107,7 +112,21 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     }
 
     public void updateContent(View view){
-        uploadToDatabase( currentUser.getUid(), getInputs() );
+        if( !uploadToDatabase( currentUser.getUid(), getInputs() ) ) {
+            setContentAsDefault();
+            Snackbar.make(view, "Couldn't successfully saved, check internet connection", Snackbar.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void setContentAsDefault(){
+        profile_photo.setImageResource(R.drawable.test_doctor_1);
+        age.setText( "0" );
+        gender.setText( "Male" );
+        blood.setText( "A rh+" );
+        name.setText( "Undefined" );
+        surname.setText( "Undefined" );
+        prioritized_name.setText( "Dr Undefined" );
     }
 
     public Map<String,Object> getInputs() {
@@ -122,9 +141,11 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         return userPack;
     }
 
-    public void uploadToDatabase(String uid, Map<String,Object> user_details){
+    public boolean uploadToDatabase(String uid, Map<String,Object> user_details){
         CollectionReference user_packs = db.collection("user_packs");
-        user_packs.document(uid).set(user_details);
+        Task task = user_packs.document(uid).set(user_details);
+
+        return task.isSuccessful() && task.isComplete();
     }
 
     public Map<String, Object> downloadFromDatabase(String uid){

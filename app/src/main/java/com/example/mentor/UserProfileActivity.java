@@ -3,6 +3,7 @@ package com.example.mentor;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -64,6 +65,10 @@ public class UserProfileActivity extends AppCompatActivity{
     }
 
     public void updateFields(Map<String,Object> user_details){
+        if( user_details == null) {
+            Log.d("DEBUG", "Can't update fields, null user details");
+            return;
+        }
         Uri profile_photo_uri = (Uri)user_details.get("photo_link");
         String prioritized_name_s = (String)user_details.get("prioritized_name");
         String age_s = (String)user_details.get("age");
