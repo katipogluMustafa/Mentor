@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ProfileUserDetailsActivity"></activity>
         <activity
             android:name=".FirstActivity"
             android:theme="@style/AppTheme_NoActionBar">
@@ -65,38 +66,34 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".NewsActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".NewsPreviewActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".EventListActivity"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".UserProfileActivity" />
+            android:theme="@style/AppTheme" />
+        <activity android:name=".UserProfileActivity" /> <!-- Facebook Start -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-        <!-- Facebook Start -->
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-
-        <!-- Facebook End -->
-
     </application>
 
 </manifest>

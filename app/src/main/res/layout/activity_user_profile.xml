@@ -181,6 +181,16 @@
                 android:orientation="vertical"
                 android:showDividers="middle">
 
+                <Button
+                    android:id="@+id/profile_user_details_update_btn"
+                    style="@style/button_style"
+                    android:layout_width="250dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="60dp"
+                    android:onClick="goUserDetails"
+                    android:text="Update Details" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -295,14 +305,16 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/profile_home_btn"
-                style="@style/button_style"
-                android:layout_width="250dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="60dp"
-                android:text="@string/button_text_home" />
+
+                <Button
+                    android:id="@+id/profile_home_btn"
+                    style="@style/button_style"
+                    android:layout_width="250dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="60dp"
+                    android:text="@string/button_text_home"
+                    android:onClick="goHome"/>
 
 
         </RelativeLayout>

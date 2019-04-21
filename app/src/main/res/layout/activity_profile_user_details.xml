@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    tools:context=".ProfileUserDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/user_profile_image_upload_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Upload an Image: "
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"/>
+
+        <ImageView
+            android:id="@+id/user_profile_image"
+            android:layout_width="208dp"
+            android:layout_height="154dp"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/test_doctor_1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="80dp">
+
+        <EditText
+            android:id="@+id/user_details_surname_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_margin="7dp"
+            android:hint="Surname"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="343dp" />
+
+        <EditText
+            android:id="@+id/user_details_age_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Age"
+            android:layout_margin="7dp"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="578dp" />
+
+        <EditText
+            android:id="@+id/user_details_blood_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Blood"
+            android:layout_margin="7dp"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="505dp" />
+
+        <EditText
+            android:id="@+id/user_details_gender_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Gender"
+            android:layout_margin="7dp"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="428dp" />
+
+        <EditText
+            android:id="@+id/user_details_name_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name"
+            android:layout_margin="7dp"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="261dp" />
+
+        <EditText
+            android:id="@+id/user_details_prioritized_name_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Prioritized Name"
+            android:layout_margin="7dp"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="99dp"
+            tools:layout_editor_absoluteY="180dp" />
+
+        <Button
+            android:id="@+id/user_details_update_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="Update" />
+
+    </LinearLayout>
+
+</LinearLayout>

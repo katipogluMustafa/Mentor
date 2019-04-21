@@ -1,6 +1,9 @@
 package com.example.mentor;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -12,15 +15,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity{
     private TextView prioritized_name;
     private TextView account_balance;
     private TextView age;
     private TextView blood;
     private TextView gender;
-    private CircleImageView profilePhoto;
+    private CircleImageView profile_image;
     private TextView name;
     private TextView surname;
+    private Button update_user_details_btn;
     FirebaseFirestore db;
 
     @Override
@@ -36,9 +40,11 @@ public class UserProfileActivity extends AppCompatActivity {
         age = findViewById(R.id.profile_age);
         blood = findViewById(R.id.profile_blood);
         gender = findViewById(R.id.profile_gender);
-        profilePhoto = findViewById(R.id.doctor_main_photo);
+        profile_image = findViewById(R.id.doctor_main_photo);
         name = findViewById(R.id.profile_user_actual_name);
         surname = findViewById(R.id.profile_user_actual_surname);
+        update_user_details_btn = findViewById(R.id.profile_user_details_update_btn);
+
 
     }
 
@@ -60,9 +66,13 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    public void goHome(View v){
+        startActivity( new Intent(this, MainActivity.class));
+    }
 
-
-
+    public void goUserDetails(View v){
+        startActivity( new Intent(this, ProfileUserDetailsActivity.class));
+    }
 
 
     //TODO: Check whether the user is anonymous and require strict login to take new appointment
