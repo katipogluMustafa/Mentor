@@ -1,16 +1,19 @@
 package com.example.mentor;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import Controller.DatabaseConnector;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -21,11 +24,18 @@ public class UserProfileActivity extends AppCompatActivity{
     private TextView age;
     private TextView blood;
     private TextView gender;
-    private CircleImageView profile_image;
+    private CircleImageView profile_photo;
     private TextView name;
     private TextView surname;
     private Button update_user_details_btn;
+
+    // Database
     FirebaseFirestore db;
+    DatabaseConnector databaseConnector;
+
+    // Authentication
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,30 +50,44 @@ public class UserProfileActivity extends AppCompatActivity{
         age = findViewById(R.id.profile_age);
         blood = findViewById(R.id.profile_blood);
         gender = findViewById(R.id.profile_gender);
-        profile_image = findViewById(R.id.edit_user_details_photo_imageView);
-        //name = findViewById(R.id.profile_user_actual_name);
-        //surname = findViewById(R.id.profile_user_actual_surname);
+        profile_photo = findViewById(R.id.edit_user_details_photo_imageView);
+        name = findViewById(R.id.profile_name_content);
+        surname = findViewById(R.id.profile_surname_content);
         update_user_details_btn = findViewById(R.id.profile_user_details_update_btn);
 
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
+        db = FirebaseFirestore.getInstance();
+        databaseConnector = new DatabaseConnector(db, currentUser);
+        updateFields( databaseConnector.downloadUserDetails() );       // get user details from database
     }
 
-    public void updateUserPack(){
-        Map<String,Object> userPack= new HashMap<>();
-        userPack.put("prioritized_name", prioritized_name.getText().toString());
-        userPack.put("account_balance", Double.valueOf(account_balance.getText().toString()));
-        userPack.put("age", Integer.valueOf(age.getText().toString()));
-        userPack.put("blood", blood.getText().toString());
-        userPack.put("gender", Boolean.valueOf(gender.getText().toString()));
-        userPack.put("name", name.getText().toString());
-        userPack.put("surname", surname.getText().toString());
-        //TODO: insert into userPack the owner's uid
+    public void updateFields(Map<String,Object> user_details){
+        Uri profile_photo_uri = (Uri)user_details.get("photo_link");
+        String prioritized_name_s = (String)user_details.get("prioritized_name");
+        String age_s = (String)user_details.get("age");
+        String gender_s = (String)user_details.get("gender");
+        String blood_s = (String)user_details.get("blood");
+        String name_s = (String)user_details.get("name");
+        String surname_s = (String)user_details.get("surname");
 
-        db.collection("user_packs").add(userPack).addOnSuccessListener( documentReference -> {
-            //TODO: sucessfully put to database, log
-        }).addOnFailureListener( exception->{
-            //TODO: Handle Exception or log to database error while adding to database
-        });
+        // Default Value Assignments
+        if( profile_photo_uri != null ) profile_photo.setImageURI( profile_photo_uri ); else profile_photo.setImageResource(R.drawable.test_doctor_1);
+        if( prioritized_name_s == null )  prioritized_name_s = "Dr Anonymous";
+        if( age_s == null  ) age_s = "0";
+        if( gender_s == null) gender_s = "Male";
+        if(blood_s == null ) blood_s = "AB rh+";
+        if( name_s == null ) name_s = "Undefined";
+        if( surname_s == null) surname_s = "Undefined";
+
+        // Assign Values to Views
+        age.setText( age_s );
+        gender.setText( gender_s );
+        blood.setText( blood_s );
+        name.setText( name_s );
+        surname.setText( surname_s );
+        prioritized_name.setText( prioritized_name_s );
     }
 
     public void goHome(View v){
