@@ -14,12 +14,13 @@
         android:orientation="horizontal">
 
 
-        <TextView
+        <Button
             android:id="@+id/user_profile_image_upload_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Upload an Image: "
+            android:text="Upload"
+            android:onClick="uploadImage"
             android:layout_gravity="center_vertical"
             android:layout_margin="10dp"/>
 
