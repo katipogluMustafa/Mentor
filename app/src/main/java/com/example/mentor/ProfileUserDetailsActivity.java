@@ -1,9 +1,11 @@
 package com.example.mentor;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,15 +71,25 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     }
 
     public void updateContent(View view){
-        startActivity(new Intent(this,UserProfileActivity.class));
+
     }
 
-    public Map<String,Object> getInputs(){
+    public void updateFields(Map<String,Object> user_details){
+        profile_photo.setImageURI( (Uri)user_details.get("photo_link") );
+        prioritized_name.setText( (String)user_details.get("prioritized_name") );
+        age.setText( (String)user_details.get("age") );
+        gender.setText( (String)user_details.get("gender") );
+        blood.setText( (String)user_details.get("blood") );
+        name.setText( (String)user_details.get("name"));
+        surname.setText( (String)user_details.get("surname") );
+    }
+
+    public Map<String,Object> getInputs() throws URISyntaxException {
         Map<String,Object> userPack = new HashMap<>();
-        //put photo url
+        userPack.put("photo_link", getPhotoUri() );//TODO: put photo uri
         userPack.put("prioritized_name", prioritized_name.getText().toString());
-        userPack.put("age", Integer.valueOf(age.getText().toString()));
-        userPack.put("gender", Boolean.valueOf(gender.getText().toString()));
+        userPack.put("age", age.getText().toString());
+        userPack.put("gender", gender.getText().toString());
         userPack.put("blood", blood.getText().toString());
         userPack.put("name", name.getText().toString());
         userPack.put("surname", surname.getText().toString());
@@ -101,6 +115,16 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    //TODO: Compelete getPhotoUri method
+    public Uri getPhotoUri(){
+        return null;
+    }
+
+    //TODO: Compelete setPhotoUri method
+    public boolean setPhotoUri(){
+        return false;
     }
 
 
