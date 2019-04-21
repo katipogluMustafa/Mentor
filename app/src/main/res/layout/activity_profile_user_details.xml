@@ -1,117 +1,299 @@
+
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="10dp"
-    tools:context=".ProfileUserDetailsActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-        <Button
-            android:id="@+id/user_profile_image_upload_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Upload"
-            android:onClick="uploadImage"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"/>
-
-        <ImageView
-            android:id="@+id/user_profile_image"
-            android:layout_width="208dp"
-            android:layout_height="154dp"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/test_doctor_1" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="80dp">
-
-        <EditText
-            android:id="@+id/user_details_surname_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_margin="7dp"
-            android:hint="Surname"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="99dp"
-            tools:layout_editor_absoluteY="343dp" />
-
-        <EditText
-            android:id="@+id/user_details_age_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Age"
-            android:layout_margin="7dp"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="99dp"
-            tools:layout_editor_absoluteY="578dp" />
-
-        <EditText
-            android:id="@+id/user_details_blood_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Blood"
-            android:layout_margin="7dp"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="99dp"
-            tools:layout_editor_absoluteY="505dp" />
-
-        <EditText
-            android:id="@+id/user_details_gender_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Gender"
-            android:layout_margin="7dp"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="99dp"
-            tools:layout_editor_absoluteY="428dp" />
-
-        <EditText
-            android:id="@+id/user_details_name_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Name"
-            android:layout_margin="7dp"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="99dp"
-            tools:layout_editor_absoluteY="261dp" />
-
-        <EditText
-            android:id="@+id/user_details_prioritized_name_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Prioritized Name"
-            android:layout_margin="7dp"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="99dp"
-            tools:layout_editor_absoluteY="180dp" />
-
-        <Button
-            android:id="@+id/user_details_update_btn"
+        <Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Update" />
+            android:layout_height="80dp"
+            android:background="@color/colorMainBlue">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="20dp">
+
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="20dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/back_arrow" />
+
+                <TextView
+                    style="@style/toolbar_title"
+                    android:text="@string/toolbar_user_profile" />
+            </RelativeLayout>
+
+
+        </Toolbar>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_calling">
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/bg_user_profile" />
+
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/edit_user_details_photo_imageView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/test_doctor_1"
+                app:civ_border_color="@color/colorLightGray2"
+                app:civ_border_width="2dp" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/edit_user_details_prioritized_name_editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="160dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/gothamroundedbold"
+                    android:gravity="center"
+                    android:text="@string/test_docors_list_name"
+                    android:textColor="@color/colorMainBlue" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/edit_user_details_prioritized_name_editText"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:divider="@drawable/line_divider_horizontal"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:divider="@drawable/line_divider_vertical"
+                        android:orientation="horizontal"
+                        android:showDividers="middle">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="20dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/edit_user_details_age_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:text="@string/user_profile_age"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="16sp" />
+
+
+                            <EditText
+                                android:id="@+id/edit_user_details_age_editText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:text="@string/user_profile_test_age"
+                                android:textColor="@color/colorLightGray4" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:text="@string/user_profile_age_subtext"
+                                android:textColor="@color/colorLightGray4" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/edit_user_details_blood_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:text="@string/user_profile_blood"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/edit_user_details_blood_editText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:text="@string/user_profile_test_blood"
+                                android:textColor="@color/colorLightGray4" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:text="@string/user_profile_gender"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/edit_user_details_gender_editText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:text="@string/user_profile_test_gender"
+                                android:textColor="@color/colorLightGray4" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/edit_user_details_name_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Name"
+                                android:layout_marginBottom="5dp"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/edit_user_details_name_editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Mustafa"
+                                android:maxLines="1"
+                                android:maxLength="25"
+                                android:padding="10dp"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:textColor="@color/colorLightGray4" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/edit_user_details_surname_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Surname"
+                                android:layout_marginBottom="5dp"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="16sp" />
+
+                            <EditText
+                                android:id="@+id/edit_user_details_surname_editText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Katipoglu"
+                                android:maxLines="1"
+                                android:maxLength="25"
+                                android:padding="10dp"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:textColor="@color/colorLightGray4" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/edit_user_details_update_btn"
+                            style="@style/button_style"
+                            android:layout_width="250dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="20dp"
+                            android:text="Update" />
+
+                    </LinearLayout>
+
+
+
+
+
+                    <Button
+                        android:id="@+id/edit_user_details_go_profile_btn"
+                        style="@style/button_style"
+                        android:layout_width="250dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="Profile" />
+
+
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

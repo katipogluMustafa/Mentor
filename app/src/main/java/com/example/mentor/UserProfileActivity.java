@@ -35,14 +35,14 @@ public class UserProfileActivity extends AppCompatActivity{
     }
 
     public void setup(){
-        prioritized_name = findViewById(R.id.profile_user_prioritized_name);
+        prioritized_name = findViewById(R.id.edit_user_details_prioritized_name_editText);
         account_balance = findViewById(R.id.profile_account_ballance);
         age = findViewById(R.id.profile_age);
         blood = findViewById(R.id.profile_blood);
         gender = findViewById(R.id.profile_gender);
-        profile_image = findViewById(R.id.doctor_main_photo);
-        name = findViewById(R.id.profile_user_actual_name);
-        surname = findViewById(R.id.profile_user_actual_surname);
+        profile_image = findViewById(R.id.edit_user_details_photo_imageView);
+        //name = findViewById(R.id.profile_user_actual_name);
+        //surname = findViewById(R.id.profile_user_actual_surname);
         update_user_details_btn = findViewById(R.id.profile_user_details_update_btn);
 
 

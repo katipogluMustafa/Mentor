@@ -18,9 +18,9 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_user_details);
-        setup();
+        //setup();
     }
-
+/*
     public void setup(){
         profile_image = findViewById(R.id.user_profile_image);
         Picasso.get().load("https://www.gravatar.com/avatar/1162ffcaa98e640c5ff5ac6e3048ff51?s=32&d=identicon&r=PG").resize(208,154).placeholder(R.drawable.test_doctor_1).into(profile_image);
@@ -29,5 +29,5 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     public void uploadImage(View v){
         startActivityForResult( Intent.createChooser(new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT),"Select Profile Image"), PICK_IMAGE_REQUEST);
     }
-
+*/
 }
