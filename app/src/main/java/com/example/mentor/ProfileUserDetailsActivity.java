@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,6 +35,9 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     // Firestore
     FirebaseFirestore db;
 
+    //Firebase
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
     // XML
     private ImageView profile_photo;
     private EditText prioritized_name;
@@ -48,7 +53,8 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_user_details);
-        //setup();
+        setup();
+        updateFields(downloadFromDatabase(currentUser.getUid()));
     }
 
     public void setup(){
@@ -64,27 +70,47 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         profileBtn = findViewById(R.id.edit_user_details_go_profile_btn);
         // Database Setup
         db = FirebaseFirestore.getInstance();
+        // Authentication Setup
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
     }
 
     public void goProfile(View view){
         startActivity(new Intent(this,UserProfileActivity.class));
     }
 
-    public void updateContent(View view){
-
-    }
-
     public void updateFields(Map<String,Object> user_details){
-        profile_photo.setImageURI( (Uri)user_details.get("photo_link") );
-        prioritized_name.setText( (String)user_details.get("prioritized_name") );
-        age.setText( (String)user_details.get("age") );
-        gender.setText( (String)user_details.get("gender") );
-        blood.setText( (String)user_details.get("blood") );
-        name.setText( (String)user_details.get("name"));
-        surname.setText( (String)user_details.get("surname") );
+        Uri profile_photo_uri = (Uri)user_details.get("photo_link");
+        String prioritized_name_s = (String)user_details.get("prioritized_name");
+        String age_s = (String)user_details.get("age");
+        String gender_s = (String)user_details.get("gender");
+        String blood_s = (String)user_details.get("blood");
+        String name_s = (String)user_details.get("name");
+        String surname_s = (String)user_details.get("surname");
+
+        // Default Value Assignments
+        if( profile_photo_uri != null ) profile_photo.setImageURI( profile_photo_uri ); else profile_photo.setImageResource(R.drawable.test_doctor_1);
+        if( prioritized_name_s == null )  prioritized_name_s = "Dr Anonymous";
+        if( age_s == null  ) age_s = "0";
+        if( gender_s == null) gender_s = "Male";
+        if(blood_s == null ) blood_s = "AB rh+";
+        if( name_s == null ) name_s = "Undefined";
+        if( surname_s == null) surname_s = "Undefined";
+
+        // Assign Values to Views
+        age.setText( age_s );
+        gender.setText( gender_s );
+        blood.setText( blood_s );
+        name.setText( name_s );
+        surname.setText( surname_s );
+        prioritized_name.setText( prioritized_name_s );
     }
 
-    public Map<String,Object> getInputs() throws URISyntaxException {
+    public void updateContent(View view){
+        uploadToDatabase( currentUser.getUid(), getInputs() );
+    }
+
+    public Map<String,Object> getInputs() {
         Map<String,Object> userPack = new HashMap<>();
         userPack.put("photo_link", getPhotoUri() );//TODO: put photo uri
         userPack.put("prioritized_name", prioritized_name.getText().toString());
@@ -102,19 +128,20 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     }
 
     public Map<String, Object> downloadFromDatabase(String uid){
+        if( uid == null)
+            return null;
+
         DocumentReference docRef = db.collection("user_packs").document(uid);
         Task<DocumentSnapshot> documentSnapshotTask =  docRef.get();
 
-        documentSnapshotTask.isSuccessful(){
+        if( documentSnapshotTask.isSuccessful() ){
             DocumentSnapshot document = documentSnapshotTask.getResult();
             if( document.exists() )
                 return document.getData();
-            else{
-                Log.d("DEBUG", "get failed with ", documentSnapshotTask.getException());
-                return null;
-            }
-
         }
+
+        Log.d("DEBUG", "get failed with ", documentSnapshotTask.getException());
+        return null;
     }
 
     //TODO: Compelete getPhotoUri method
