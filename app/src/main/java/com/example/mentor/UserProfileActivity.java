@@ -44,7 +44,7 @@ public class UserProfileActivity extends AppCompatActivity{
         setContentView(R.layout.activity_user_profile);
         db = FirebaseFirestore.getInstance();
     }
-
+    //TODO: Broken database connection, refactor
     public void setup(){
         prioritized_name = findViewById(R.id.edit_user_details_prioritized_name_editText);
         account_balance = findViewById(R.id.profile_account_ballance);

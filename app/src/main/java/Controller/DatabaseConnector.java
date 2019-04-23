@@ -19,7 +19,7 @@ public class DatabaseConnector {
         this.db = db;
         this.currentUser = currentUser;
     }
-
+    // TODO: Failed downloading operation, be careful about listeners, if required, rewrite the code
     public Map<String, Object> downloadUserDetails(){
         String uid = currentUser.getUid();
         if( currentUser == null || uid == null)

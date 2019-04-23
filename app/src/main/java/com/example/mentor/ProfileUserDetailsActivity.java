@@ -80,6 +80,8 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         startActivity(new Intent(this,UserProfileActivity.class));
     }
 
+    //TODO: Handle profile photo Uri
+    //TODO: Update operation always fails, refactor this method
     public void updateFields(Map<String,Object> user_details){
         if( user_details == null) {
            Log.d("DEBUG", "Can't update fields, null user details");
@@ -141,6 +143,7 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         return userPack;
     }
 
+    //TODO: Refactor this function, use DatabaseConnector class
     public boolean uploadToDatabase(String uid, Map<String,Object> user_details){
         CollectionReference user_packs = db.collection("user_packs");
         Task task = user_packs.document(uid).set(user_details);
@@ -148,6 +151,7 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         return task.isSuccessful() && task.isComplete();
     }
 
+    //TODO: Refactor this function, use DatabaseConnector class
     public Map<String, Object> downloadFromDatabase(String uid){
         if( uid == null)
             return null;
