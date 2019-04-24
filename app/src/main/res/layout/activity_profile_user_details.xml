@@ -54,7 +54,7 @@
                 android:background="@drawable/bg_user_profile" />
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/edit_user_details_photo_imageView"
+                android:id="@+id/user_details_photo_view"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
@@ -69,7 +69,7 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/edit_user_details_prioritized_name_editText"
+                    android:id="@+id/user_details_prioritized_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -87,7 +87,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/edit_user_details_prioritized_name_editText"
+                    android:layout_below="@id/user_details_prioritized_name"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     android:divider="@drawable/line_divider_horizontal"
@@ -110,7 +110,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/edit_user_details_age_title"
+                                android:id="@+id/user_details_age_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5dp"
@@ -121,7 +121,7 @@
 
 
                             <EditText
-                                android:id="@+id/edit_user_details_age_editText"
+                                android:id="@+id/user_details_age"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
@@ -148,7 +148,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/edit_user_details_blood_title"
+                                android:id="@+id/user_details_blood_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="5dp"
@@ -158,7 +158,7 @@
                                 android:textSize="16sp" />
 
                             <EditText
-                                android:id="@+id/edit_user_details_blood_editText"
+                                android:id="@+id/user_details_blood"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
@@ -187,7 +187,7 @@
                                 android:textSize="16sp" />
 
                             <EditText
-                                android:id="@+id/edit_user_details_gender_editText"
+                                android:id="@+id/user_details_gender"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
@@ -213,7 +213,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/edit_user_details_name_title"
+                                android:id="@+id/user_details_name_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Name"
@@ -223,7 +223,7 @@
                                 android:textSize="16sp" />
 
                             <EditText
-                                android:id="@+id/edit_user_details_name_editText"
+                                android:id="@+id/user_details_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Mustafa"
@@ -241,7 +241,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/edit_user_details_surname_title"
+                                android:id="@+id/user_details_surname_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Surname"
@@ -251,7 +251,7 @@
                                 android:textSize="16sp" />
 
                             <EditText
-                                android:id="@+id/edit_user_details_surname_editText"
+                                android:id="@+id/user_details_surname"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Katipoglu"
@@ -264,7 +264,7 @@
                         </LinearLayout>
 
                         <Button
-                            android:id="@+id/edit_user_details_update_btn"
+                            android:id="@+id/user_details_save_btn"
                             style="@style/button_style"
                             android:layout_width="250dp"
                             android:layout_alignParentBottom="true"
@@ -278,7 +278,7 @@
 
 
                     <Button
-                        android:id="@+id/edit_user_details_go_profile_btn"
+                        android:id="@+id/user_details_profile_btn"
                         style="@style/button_style"
                         android:layout_width="250dp"
                         android:layout_centerHorizontal="true"
