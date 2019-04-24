@@ -35,7 +35,7 @@ public class UserProfileActivity extends AppCompatActivity{
         setContentView(R.layout.activity_user_profile);
         setup();
     }
-
+    //TODO: Broken database connection, refactor
     public void setup(){
         prioritized_name = findViewById(R.id.profile_prioritized_name);
         account_balance = findViewById(R.id.profile_balance);
