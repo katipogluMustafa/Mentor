@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 
 import java.io.File;
@@ -69,30 +70,13 @@ public class UserProfileActivity extends AppCompatActivity{
         update_user_details_btn = findViewById(R.id.profile_update_btn);
 
         // Profile Photo
-        try{
-            File local_photo_file = File.createTempFile("images","jpg");
-            StorageReference photoRef = storageReference.child("user_photos/" + currentUser.getUid());
-            photoRef.getFile(local_photo_file).addOnCompleteListener( task -> {
-                if(task.isSuccessful()) {
-                    updateProfileImage(local_photo_file);
-                }
-                else
-                    Snackbar.make( profile_photo , task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-            }).addOnProgressListener( taskSnapshot -> {
-
-            });
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void updateProfileImage(File local_photo_file) {
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.fromFile(local_photo_file));
-            profile_photo.setImageBitmap(bitmap);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        StorageReference photoRef = storageReference.child("user_photos/" + currentUser.getUid());
+        photoRef.getDownloadUrl().addOnCompleteListener( task ->{
+            if( task.isSuccessful())
+                Picasso.get().load(task.getResult()).into(profile_photo);
+            else
+                Snackbar.make( profile_photo , task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+        });
     }
 
 
