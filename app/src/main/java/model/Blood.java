@@ -9,37 +9,37 @@ public enum Blood{
             return "0+";
         }
     },
-    ZERO_NEGATIVE(1){
+    ZERO_NEGATIVE(4){
         @Override
         public String toString(){
             return "0-";
         }
     },
-    A_POSITIVE(2){
+    A_POSITIVE(1){
         @Override
         public String toString(){
             return "A+";
         }
     },
-    A_NEGATIVE(3){
+    A_NEGATIVE(5){
         @Override
         public String toString(){
             return "A-";
         }
     },
-    B_POSITIVE(4){
+    B_POSITIVE(2){
         @Override
         public String toString(){
             return "B+";
         }
     },
-    B_NEGATIVE(5){
+    B_NEGATIVE(6){
         @Override
         public String toString(){
             return "B-";
         }
     },
-    AB_POSITIVE(6){
+    AB_POSITIVE(3){
         @Override
         public String toString(){
             return "AB+";

@@ -12,6 +12,11 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -19,10 +24,15 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
+import model.Blood;
+import model.Gender;
 
 public class UserProfileActivity extends AppCompatActivity{
     private TextView prioritized_name;
@@ -43,6 +53,10 @@ public class UserProfileActivity extends AppCompatActivity{
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
+    // Database
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +71,9 @@ public class UserProfileActivity extends AppCompatActivity{
         // Storage
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        // Database
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference().child("users").child(currentUser.getUid());
 
         // View initializations
         prioritized_name = findViewById(R.id.profile_prioritized_name);
@@ -69,6 +86,20 @@ public class UserProfileActivity extends AppCompatActivity{
         surname = findViewById(R.id.profile_surname);
         update_user_details_btn = findViewById(R.id.profile_update_btn);
 
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String,Object> content = (HashMap<String,Object>)dataSnapshot.getValue();
+                updateFields(content);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         // Profile Photo
         StorageReference photoRef = storageReference.child("user_photos/" + currentUser.getUid());
         photoRef.getDownloadUrl().addOnCompleteListener( task ->{
@@ -78,6 +109,38 @@ public class UserProfileActivity extends AppCompatActivity{
                 Picasso.get().load(R.drawable.test_doctor_1).into(profile_photo);
             }
         });
+
+    }
+
+    private void updateFields(Map<String, Object> content) {
+        if( content == null )
+            Snackbar.make( prioritized_name , "No Internet Connection", Snackbar.LENGTH_LONG).show();
+        else
+            for(Map.Entry<String,Object> entries : content.entrySet() )
+                switch (entries.getKey()){
+                    case "age":
+                        String text = entries.getValue().toString();
+                        age.setText(text);
+                        break;
+                    case "name":
+                        name.setText((String)entries.getValue());
+                        break;
+                    case "surname":
+                        surname.setText((String)entries.getValue());
+                        break;
+                    case "prioritized_name":
+                        prioritized_name.setText((String)entries.getValue());
+                        break;
+                    case "blood":
+                        text = Blood.bloodFactory( Integer.valueOf(entries.getValue().toString()) ).toString();
+                        blood.setText( text );
+                        break;
+                    case "gender":
+                        text = Gender.genderFactory( Integer.valueOf(entries.getValue().toString()) ).toString();
+                        gender.setText( text );
+                        break;
+                }
+
     }
 
 

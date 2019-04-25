@@ -1,6 +1,7 @@
 package com.example.mentor;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import model.Blood;
@@ -25,13 +26,18 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileUserDetailsActivity extends AppCompatActivity {
 
@@ -80,12 +86,25 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         profile_photo = findViewById(R.id.user_details_photo_view);
         profile_photo.setOnClickListener(v -> chooseImage());
 
-
         // EditText Setup
         prioritized_name = findViewById(R.id.user_details_prioritized_name);
         age = findViewById(R.id.user_details_age);
         name = findViewById(R.id.user_details_name);
         surname = findViewById(R.id.user_details_surname);
+
+        // EditText Initial Values
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String,Object> content = (HashMap<String,Object>)dataSnapshot.getValue();
+                initFields(content);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         // Add Listeners to EditTexts
         prioritized_name.addTextChangedListener(new EditTextWatcher(prioritized_name, "prioritized_name", currentUser.getUid()));
@@ -98,6 +117,39 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
 
 
     }
+
+    private void initFields(Map<String, Object> content) {
+        if( content == null )
+            Snackbar.make( prioritized_name , "No Internet Connection", Snackbar.LENGTH_LONG).show();
+        else
+            for(Map.Entry<String,Object> entries : content.entrySet() )
+                switch (entries.getKey()){
+                    case "age":
+                        String text = entries.getValue().toString();
+                        if( !age.hasWindowFocus() )
+                            age.setText(text);
+                        break;
+                    case "name":
+                        if( !name.hasWindowFocus() )
+                            name.setText((String)entries.getValue());
+                        break;
+                    case "surname":
+                        if( !surname.hasWindowFocus() )
+                            surname.setText((String)entries.getValue());
+                        break;
+                    case "prioritized_name":
+                        if( !prioritized_name.hasWindowFocus() )
+                            prioritized_name.setText((String)entries.getValue());
+                        break;
+                    case "blood":
+                        blood.setSelection( Blood.bloodFactory( Integer.valueOf(entries.getValue().toString()) ).getIntValue() );
+                        break;
+                    case "gender":
+                        gender.setSelection( Gender.genderFactory( Integer.valueOf(entries.getValue().toString()) ).getIntValue() );
+                        break;
+                }
+    }
+
 
     public void spinnerSetup(){
         blood = findViewById(R.id.user_details_blood_spinner);
