@@ -59,7 +59,7 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/test_doctor_1"
+                android:src="@drawable/ic_loading"
                 app:civ_border_color="@color/colorLightGray2"
                 app:civ_border_width="2dp" />
 

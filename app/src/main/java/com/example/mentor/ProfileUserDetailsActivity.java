@@ -57,6 +57,9 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     }
 
     public void setup(){
+        // Authentication Setup
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         // Image Upload Setup
         storage = FirebaseStorage.getInstance();
@@ -66,9 +69,7 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.user_details_save_btn);
         saveBtn.setOnClickListener( v-> uploadImage());
 
-        // Authentication Setup
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+
     }
 
     //TODO: You can later update ProgressDialog into ProgressBar <LATER>
@@ -78,7 +79,7 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
             progressDialog.setTitle("Uploading");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("user_photos/" + UUID.randomUUID() );
+            StorageReference ref = storageReference.child("user_photos/" + currentUser.getUid() );
             ref.putFile(profile_photo_path).addOnCompleteListener( task->{
                 if( task.isSuccessful() ){
                     progressDialog.dismiss();

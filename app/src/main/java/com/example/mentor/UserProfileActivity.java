@@ -1,14 +1,23 @@
 package com.example.mentor;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+
+import java.io.File;
+import java.io.IOException;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +38,10 @@ public class UserProfileActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
+    // Storage
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +50,14 @@ public class UserProfileActivity extends AppCompatActivity{
     }
     //TODO: Broken database connection, refactor
     public void setup(){
+        // Authentication
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        // Storage
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        // View initializations
         prioritized_name = findViewById(R.id.profile_prioritized_name);
         account_balance = findViewById(R.id.profile_balance);
         age = findViewById(R.id.profile_age);
@@ -47,8 +68,31 @@ public class UserProfileActivity extends AppCompatActivity{
         surname = findViewById(R.id.profile_surname);
         update_user_details_btn = findViewById(R.id.profile_update_btn);
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        // Profile Photo
+        try{
+            File local_photo_file = File.createTempFile("images","jpg");
+            StorageReference photoRef = storageReference.child("user_photos/" + currentUser.getUid());
+            photoRef.getFile(local_photo_file).addOnCompleteListener( task -> {
+                if(task.isSuccessful()) {
+                    updateProfileImage(local_photo_file);
+                }
+                else
+                    Snackbar.make( profile_photo , task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+            }).addOnProgressListener( taskSnapshot -> {
+
+            });
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void updateProfileImage(File local_photo_file) {
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.fromFile(local_photo_file));
+            profile_photo.setImageBitmap(bitmap);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 
