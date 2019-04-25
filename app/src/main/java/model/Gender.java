@@ -1,5 +1,8 @@
 package model;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public enum Gender{
     MALE(0){
         @Override
@@ -11,6 +14,11 @@ public enum Gender{
         public String toString(){
             return "Female";
         }
+    },UNDEFINED(-1){
+        @Override
+        public String toString(){
+            return "----";
+        }
     };
 
     private final int intValue;
@@ -18,28 +26,30 @@ public enum Gender{
         this.intValue = intValue;
     }
 
+    @NonNull
     public static Gender genderFactory(int intValue){
         for( Gender g : Gender.values() )
             if(g.getIntValue() == intValue)
                 return g;
-        return null;
+        return Gender.UNDEFINED;
     }
 
-    public boolean isValid(int intValue){
-        return genderFactory(intValue) != null;
+    public static boolean isValid(int intValue){
+        return genderFactory(intValue) != Gender.UNDEFINED;
     }
 
+    @NonNull
     public static Gender genderFactory(String gender){
         if( gender == null)
-            return null;
+            return Gender.UNDEFINED;
         for( Gender g : Gender.values() )
             if(g.toString().equals(gender))
                 return g;
-        return null;
+        return Gender.UNDEFINED;
     }
 
-    public boolean isValid(String gender){
-        return genderFactory(gender) != null;
+    public static boolean isValid(String gender){
+        return genderFactory(gender) != Gender.UNDEFINED;
     }
 
     public int getIntValue() {

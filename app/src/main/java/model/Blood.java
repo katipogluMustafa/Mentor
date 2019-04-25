@@ -1,5 +1,7 @@
 package model;
 
+import androidx.annotation.NonNull;
+
 public enum Blood{
     ZERO_POSITIVE(0){
         @Override
@@ -48,6 +50,12 @@ public enum Blood{
         public String toString(){
             return "AB-";
         }
+    },
+    UNDEFINED(-1){
+        @Override
+        public String toString(){
+            return "---";
+        }
     };
 
     private int intValue;
@@ -55,30 +63,32 @@ public enum Blood{
         this.intValue = intValue;
     }
 
+    @NonNull
     public static Blood bloodFactory(int intValue){
         for( Blood b : Blood.values() )
             if(b.getIntValue() == intValue)
                 return b;
 
-        return null;
+        return UNDEFINED;
     }
 
+    @NonNull
     public static Blood bloodFactory(String blood){
         if( blood == null)
-            return null;
+            return UNDEFINED;
 
         for( Blood b : Blood.values() )
             if( b.toString().equals(blood))
                 return b;
-        return null;
+        return UNDEFINED;
     }
 
-    public boolean isValid(String blood){
-        return bloodFactory(blood) != null;
+    public static boolean isValid(String blood){
+        return bloodFactory(blood) != UNDEFINED;
     }
 
-    public boolean isValid(int intValue){
-        return bloodFactory(intValue) != null;
+    public static boolean isValid(int intValue){
+        return bloodFactory(intValue) != UNDEFINED;
     }
 
     public int getIntValue() {
