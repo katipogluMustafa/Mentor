@@ -72,10 +72,11 @@ public class UserProfileActivity extends AppCompatActivity{
         // Profile Photo
         StorageReference photoRef = storageReference.child("user_photos/" + currentUser.getUid());
         photoRef.getDownloadUrl().addOnCompleteListener( task ->{
-            if( task.isSuccessful())
+            if( task.isSuccessful() )
                 Picasso.get().load(task.getResult()).into(profile_photo);
-            else
-                Snackbar.make( profile_photo , task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+            else{
+                Picasso.get().load(R.drawable.test_doctor_1).into(profile_photo);
+            }
         });
     }
 
