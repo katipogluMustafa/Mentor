@@ -4,8 +4,8 @@ public class User {
     private String prioritizedName;
     private int balance;
     private int age;
-    // Enum Blood
-    // Enum Gender
+    private Blood blood;
+    private Gender gender;
     private String name;
     // Appointment[] appointments;
     // Review[] review;
