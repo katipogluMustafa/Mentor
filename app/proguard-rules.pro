@@ -20,6 +20,18 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Firebase Authentication
+## Firebase Authentication
 -keepattributes Signature
 -keepattributes *Annotation*
+
+## Firebase Realtime Database
+
+# Add this global rule
+-keepattributes Signature
+
+# This rule will properly ProGuard all the model classes in
+# the package com.yourcompany.models. Modify to fit the structure
+# of your app.
+-keepclassmembers class model.** {
+  *;
+}

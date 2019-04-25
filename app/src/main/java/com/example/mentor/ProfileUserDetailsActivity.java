@@ -3,6 +3,7 @@ package com.example.mentor;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import ui.EditTextWatcher;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -28,6 +31,9 @@ import java.util.UUID;
 
 public class ProfileUserDetailsActivity extends AppCompatActivity {
 
+    // Firebase Database
+    FirebaseDatabase database;
+    DatabaseReference databaseReference;
 
     // Image Upload
     private Uri profile_photo_path;
@@ -66,11 +72,31 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         storageReference = storage.getReference();
         profile_photo = findViewById(R.id.user_details_photo_view);
         profile_photo.setOnClickListener( v -> chooseImage());
-        saveBtn = findViewById(R.id.user_details_save_btn);
-        saveBtn.setOnClickListener( v-> uploadImage());
+        //saveBtn = findViewById(R.id.user_details_save_btn);
+        //saveBtn.setOnClickListener( v-> uploadImage());
 
+        // EditText Setup
+        prioritized_name = findViewById(R.id.user_details_prioritized_name);
+        age = findViewById(R.id.user_details_age);
+        //blood = findViewById(R.id.user_details_blood);
+        //gender = findViewById(R.id.user_details_gender);
+        name = findViewById(R.id.user_details_name);
+        surname = findViewById(R.id.user_details_surname);
+
+        // Add Listeners to EditTexts
+        prioritized_name.addTextChangedListener( new EditTextWatcher(prioritized_name,"prioritized_name", currentUser.getUid()));
+        age.addTextChangedListener(new EditTextWatcher(age, "age", currentUser.getUid()));
+        //blood.addTextChangedListener(new EditTextWatcher(blood,"blood",currentUser.getUid()));
+        //gender.addTextChangedListener(new EditTextWatcher(gender,"gender",currentUser.getUid()));
+        name.addTextChangedListener(new EditTextWatcher(name,"name",currentUser.getUid()));
+        surname.addTextChangedListener(new EditTextWatcher(surname,"surname",currentUser.getUid()));
 
     }
+
+    public void updateContent(View view){
+
+    }
+
 
     //TODO: You can later update ProgressDialog into ProgressBar <LATER>
     private void uploadImage() {

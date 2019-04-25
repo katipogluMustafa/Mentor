@@ -78,7 +78,7 @@ public enum Blood{
             return UNDEFINED;
 
         for( Blood b : Blood.values() )
-            if( b.toString().equals(blood))
+            if( b.toString().compareToIgnoreCase(blood) == 0)
                 return b;
         return UNDEFINED;
     }

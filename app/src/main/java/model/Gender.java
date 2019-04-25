@@ -43,7 +43,7 @@ public enum Gender{
         if( gender == null)
             return Gender.UNDEFINED;
         for( Gender g : Gender.values() )
-            if(g.toString().equals(gender))
+            if( g.toString().compareToIgnoreCase(gender) == 0 )
                 return g;
         return Gender.UNDEFINED;
     }

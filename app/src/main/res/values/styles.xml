@@ -75,5 +75,10 @@
         <item name="android:fontFamily">@font/ralewaybold</item>
     </style>
 
+    <style name="user_details_spinner" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/colorLightGray4</item>
+        <item name="android:fontFamily">@font/gothamroundedbold</item>
+    </style>
+
 
 </resources>

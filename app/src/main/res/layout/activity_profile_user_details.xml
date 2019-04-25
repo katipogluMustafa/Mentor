@@ -106,6 +106,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="20dp"
+                            android:layout_marginRight="10dp"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -142,8 +143,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -157,24 +158,33 @@
                                 android:textColor="@color/colorBlack"
                                 android:textSize="16sp" />
 
+                            <Spinner
+                                android:id="@+id/user_details_blood_spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/colorLightGray4"
+                                android:fontFamily="@font/gothamroundedbold"
+                                android:entries="@array/user_details_blood_array"
+                                style="@style/user_details_spinner"/>
+<!--
                             <EditText
                                 android:id="@+id/user_details_blood"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:maxLines="1"
-                                android:maxLength="8"
                                 android:fontFamily="@font/gothamroundedbold"
-                                android:text="@string/user_profile_test_blood"
+                                android:maxLength="8"
+                                android:maxLines="1"
+                                android:text="AB+"
                                 android:textColor="@color/colorLightGray4" />
-
+-->
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="20dp"
                             android:gravity="center"
+                            android:layout_marginRight="-20dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -186,6 +196,15 @@
                                 android:textColor="@color/colorBlack"
                                 android:textSize="16sp" />
 
+                            <Spinner
+                                android:id="@+id/user_details_gender_spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:entries="@array/user_details_gender_array"
+                                style="@style/user_details_spinner"
+                                />
+<!--
                             <EditText
                                 android:id="@+id/user_details_gender"
                                 android:layout_width="wrap_content"
@@ -195,7 +214,7 @@
                                 android:fontFamily="@font/gothamroundedbold"
                                 android:text="@string/user_profile_test_gender"
                                 android:textColor="@color/colorLightGray4" />
-
+-->
                         </LinearLayout>
 
 
@@ -262,7 +281,7 @@
                                 android:textColor="@color/colorLightGray4" />
 
                         </LinearLayout>
-
+<!--
                         <Button
                             android:id="@+id/user_details_save_btn"
                             style="@style/button_style"
@@ -273,20 +292,27 @@
                             android:layout_marginBottom="20dp"
                             android:onClick="updateContent"
                             android:text="Save" />
+-->
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/user_details_profile_btn"
+                            style="@style/button_style"
+                            android:layout_width="250dp"
+
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="20dp"
+                            android:onClick="goProfile"
+                            android:text="Profile" />
 
                     </LinearLayout>
 
 
-                    <Button
-                        android:id="@+id/user_details_profile_btn"
-                        style="@style/button_style"
-                        android:layout_width="250dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginBottom="20dp"
-                        android:onClick="goProfile"
-                        android:text="Profile" />
 
 
 

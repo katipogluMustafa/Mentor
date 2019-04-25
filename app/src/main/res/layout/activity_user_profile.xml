@@ -250,7 +250,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/gothamroundedbold"
-                                android:text="@string/user_profile_test_blood"
+                                android:text="AB+"
                                 android:textColor="@color/colorLightGray4" />
 
 
@@ -347,23 +347,25 @@
 
                         </LinearLayout>
 
-                        <Button
-                            android:id="@+id/profile_update_btn"
-                            style="@style/button_style"
-                            android:layout_width="250dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginBottom="20dp"
-                            android:onClick="goUserDetails"
-                            android:text="Update Details" />
+
 
                     </LinearLayout>
 
 
-
-
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <Button
+                        android:id="@+id/profile_update_btn"
+                        style="@style/button_style"
+                        android:layout_width="150dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="30dp"
+                        android:onClick="goUserDetails"
+                        android:text="Update Details" />
                     <Button
                         android:id="@+id/profile_home_btn"
                         style="@style/button_style"
@@ -374,6 +376,10 @@
                         android:layout_marginBottom="20dp"
                         android:onClick="goHome"
                         android:text="@string/button_text_home" />
+                </LinearLayout>
+
+
+
 
 
 
