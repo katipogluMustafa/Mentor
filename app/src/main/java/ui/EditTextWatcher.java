@@ -3,14 +3,11 @@ package ui;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.mentor.ProfileUserDetailsActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import model.Blood;
-import model.Gender;
+
 
 public class EditTextWatcher implements TextWatcher {
     private EditText editText;
@@ -47,28 +44,8 @@ public class EditTextWatcher implements TextWatcher {
             case "surname":
                 StringUpload();
                 break;
-            case "Gender":
-                GenderUpload();
-                break;
-            case "Blood":
-                BloodUpload();
-                break;
         }
 
-    }
-
-    private void BloodUpload() {
-        String str = editText.getText().toString();
-        if( Blood.isValid( str) )
-            databaseReference.setValue( Blood.bloodFactory(str).getIntValue() );
-    }
-
-    private void GenderUpload() {
-        String str = editText.getText().toString();
-        if( Gender.isValid(str) )
-            databaseReference.setValue( Gender.genderFactory(str).getIntValue() );
-        else
-            databaseReference.setValue( -1);
     }
 
     private void StringUpload() {

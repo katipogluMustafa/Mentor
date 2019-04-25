@@ -164,7 +164,6 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/colorLightGray4"
                                 android:fontFamily="@font/gothamroundedbold"
-                                android:entries="@array/user_details_blood_array"
                                 style="@style/user_details_spinner"/>
 <!--
                             <EditText
@@ -201,7 +200,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:entries="@array/user_details_gender_array"
                                 style="@style/user_details_spinner"
                                 />
 <!--
