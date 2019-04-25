@@ -7,24 +7,18 @@ import model.Blood;
 import model.Gender;
 import model.SpinnerItem;
 import ui.EditTextWatcher;
-import ui.SpinnerAdapter;
 import ui.UserDetailsSpinnerAdapter;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -38,7 +32,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class ProfileUserDetailsActivity extends AppCompatActivity {
 
@@ -64,9 +57,6 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
     private Spinner blood;
     private EditText name;
     private EditText surname;
-
-    // Context
-    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,6 +185,7 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
                 try{
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), profile_photo_path);
                     profile_photo.setImageBitmap(bitmap);
+                    uploadImage();
                 }catch ( IOException e){
                     e.printStackTrace();
                 }
