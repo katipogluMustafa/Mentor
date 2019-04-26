@@ -15,3 +15,5 @@ public class CreateAppointmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_appointment);
     }
 }
+
+//TODO: Check whether the user is anonymous and require strict login to take new appointment
