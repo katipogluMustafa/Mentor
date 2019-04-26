@@ -35,4 +35,8 @@ public class BookAppointmentTimeActivity extends AppCompatActivity implements Vi
         //TODO: Needed the database connection!
         startActivity(new Intent(this, CreateAppointmentActivity.class));
     }
+
+    public void goBack(View v){
+        super.onBackPressed();
+    }
 }

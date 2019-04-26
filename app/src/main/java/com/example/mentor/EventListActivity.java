@@ -66,5 +66,8 @@ public class EventListActivity extends AppCompatActivity implements CompactCalen
         textView.setText(simpleDateFormat.format(firstDayOfNewMonth));
     }
 
+    public void goBack(View v){
+        super.onBackPressed();
+    }
 
 }

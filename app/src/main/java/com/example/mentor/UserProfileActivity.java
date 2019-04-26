@@ -147,6 +147,10 @@ public class UserProfileActivity extends AppCompatActivity{
         startActivity( new Intent(this, ProfileUserDetailsActivity.class));
     }
 
+    public void goBack(View v){
+        super.onBackPressed();
+    }
+
     //TODO: <Later> Require email verification, take a look at here : https://firebase.googleblog.com/2017/02/email-verification-in-firebase-auth.html
     //TODO: <Later> After completing required information, convert anonymous account to normal account : https://firebase.google.com/docs/auth/android/anonymous-auth?authuser=2
     //TODO: <Later> Put additional delete account button but first authenticate from email : https://firebase.google.com/docs/auth/android/manage-users#send_a_password_reset_email

@@ -73,4 +73,8 @@ public class ReviewActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
+
+    public void goBack(View v){
+        super.onBackPressed();
+    }
 }

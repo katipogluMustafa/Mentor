@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 
 import java.util.Date;
 
@@ -40,4 +41,9 @@ public class BookAppointmentCalenderActivity extends AppCompatActivity implement
     public void onClick(View v) {
         startActivity(new Intent(this, BookAppointmentTimeActivity.class));
     }
+
+    public void goBack(View v){
+        super.onBackPressed();
+    }
+
 }

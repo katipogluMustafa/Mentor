@@ -67,4 +67,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 Snackbar.make(v,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
         });
     }
+
+    public void goBack(View v){
+        super.onBackPressed();
+    }
 }

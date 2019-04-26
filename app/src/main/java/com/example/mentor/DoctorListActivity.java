@@ -1,6 +1,7 @@
 package com.example.mentor;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,5 +53,8 @@ public class DoctorListActivity extends AppCompatActivity {
     private void setUp() {
         recyclerViewItems = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.doctor_list_recyclerView);
+    }
+    public void goBack(View v){
+        super.onBackPressed();
     }
 }

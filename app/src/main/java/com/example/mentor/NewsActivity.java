@@ -1,6 +1,7 @@
 package com.example.mentor;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.mentor.R;
 
@@ -52,5 +53,9 @@ public class NewsActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.news_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void goBack(View v){
+        super.onBackPressed();
     }
 }

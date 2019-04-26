@@ -94,4 +94,8 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
         //TODO: The user wants to see the doctor photos!
         return false;
     }
+
+    public void goBack(View v){
+        super.onBackPressed();
+    }
 }

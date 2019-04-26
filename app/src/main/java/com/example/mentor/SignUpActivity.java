@@ -104,4 +104,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Snackbar.make(v, getString(R.string.password_mismatch), Snackbar.LENGTH_LONG).show();
 
     }
+
+    public void goBack(View v){
+        super.onBackPressed();
+    }
 }

@@ -244,4 +244,8 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void goBack(View v){
+        super.onBackPressed();
+    }
 }

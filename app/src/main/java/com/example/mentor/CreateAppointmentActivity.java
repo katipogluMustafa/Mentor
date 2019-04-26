@@ -20,6 +20,11 @@ public class CreateAppointmentActivity extends AppCompatActivity {
     public void showAppointmentDetails(View v){
         startActivity( new Intent(this, AppointmentDetailsActivity.class));
     }
+
+    public void goBack(View v){
+        super.onBackPressed();
+    }
+
 }
 
 //TODO: Check whether the user is anonymous and require strict login to take new appointment

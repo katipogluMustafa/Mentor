@@ -90,4 +90,8 @@ public class FindDoctorActivity extends AppCompatActivity implements View.OnClic
         //TODO: FindDoctor button was clicked!
         return true;
     }
+
+    public void goBack(View v){
+        super.onBackPressed();
+    }
 }
