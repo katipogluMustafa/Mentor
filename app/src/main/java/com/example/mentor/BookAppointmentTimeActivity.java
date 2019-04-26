@@ -33,6 +33,6 @@ public class BookAppointmentTimeActivity extends AppCompatActivity implements Vi
     @Override
     public void onClick(View v) {
         //TODO: Needed the database connection!
-        startActivity(new Intent(this, AppointmentDetailsActivity.class));
+        startActivity(new Intent(this, CreateAppointmentActivity.class));
     }
 }

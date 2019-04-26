@@ -1,6 +1,8 @@
 package com.example.mentor;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.mentor.R;
 
@@ -13,6 +15,10 @@ public class CreateAppointmentActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_appointment);
+    }
+
+    public void showAppointmentDetails(View v){
+        startActivity( new Intent(this, AppointmentDetailsActivity.class));
     }
 }
 
