@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 
+import java.util.Date;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,6 +30,8 @@ public class BookAppointmentCalenderActivity extends AppCompatActivity implement
         //TODO: Calender listener...
         calendarView = (CalendarView) findViewById(R.id.bookAppointmentCalenderActivity_calenderView);
         nextButton = (Button) findViewById(R.id.bookAppointmentCalenderActivity_nextButton);
+
+        long appointmentDate = calendarView.getDate();
 
         nextButton.setOnClickListener(this);
     }
