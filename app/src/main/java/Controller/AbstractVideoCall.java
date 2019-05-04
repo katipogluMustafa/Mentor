@@ -1,7 +1,6 @@
 package Controller;
 
 import android.app.Activity;
-import android.media.Image;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -148,18 +147,16 @@ public class AbstractVideoCall implements VideoCall{
         return createChannel(channelName,null);
     }
 
+    //TODO: Process the Error Codes if error happens during channel creating or connection
     public boolean createChannel(String channelName, String extraChannelInfo){
         int resultCode = rtcEngine.joinChannel(null, channelName, extraChannelInfo,0);
         switch (resultCode){
+            case 0:
+                return true;
             case Constants.ERR_INVALID_ARGUMENT:
-                //
-                break;
             case Constants.ERR_NOT_READY:
-                //
-                break;
             case Constants.ERR_REFUSED:
-                //
-                break;
+                return false;
         }
 
         setupLocalVideoFeed();
@@ -171,9 +168,7 @@ public class AbstractVideoCall implements VideoCall{
      * Update the UI after calling this function, like making audio,video toggle buttons invisible or go to another activity etc.
      */
     public boolean leaveChannel(){
-        if( rtcEngine.leaveChannel() < 0)
-            return false;
-        return true;
+        return rtcEngine.leaveChannel() == 0;
     }
 
     /**
@@ -181,9 +176,7 @@ public class AbstractVideoCall implements VideoCall{
      * @param isMuted , if true mutes
      */
     public boolean muteLocalAudio(boolean isMuted){
-        if( rtcEngine.muteLocalAudioStream(isMuted) < 0)
-            return false;
-        return true;
+        return rtcEngine.muteLocalAudioStream(isMuted) == 0;
     }
 
     /**
@@ -198,17 +191,27 @@ public class AbstractVideoCall implements VideoCall{
         SurfaceView videoSurface = (SurfaceView) localCameraContainer.getChildAt(0);
         videoSurface.setZOrderMediaOverlay( !isMuted );
         videoSurface.setVisibility(isMuted ? View.GONE : View.VISIBLE);
+        return true;
     }
 
     public boolean muteRemoteVideo(int uid, boolean isMuted ){
-        if( rtcEngine.muteRemoteAudioStream(uid, isMuted) < 0)
+        if( rtcEngine.muteRemoteVideoStream(uid, isMuted) < 0)
             return false;
 
         remoteVideoContainer.setVisibility( isMuted ? View.GONE : View.VISIBLE );
         SurfaceView videoSurface = (SurfaceView) remoteVideoContainer.getChildAt(0);
         videoSurface.setZOrderMediaOverlay(!isMuted);
         videoSurface.setVisibility(isMuted ? View.GONE : View.VISIBLE);
-
+        return true;
     }
+
+    public boolean muteRemoteAudio(int uid, boolean isMuted ){
+        return rtcEngine.muteRemoteVideoStream(uid, isMuted) == 0;
+    }
+
+    public boolean switchCamera(){
+        return rtcEngine.switchCamera() == 0;
+    }
+
 
 }
