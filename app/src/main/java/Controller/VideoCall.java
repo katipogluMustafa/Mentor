@@ -1,167 +1,20 @@
 package Controller;
 
-import android.app.Activity;
-import android.media.Image;
-import android.view.SurfaceView;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+public interface VideoCall {
+    // Configuration Methods
+    void initSession();
+    void setCameraViews(FrameLayout remoteVideoContainer, FrameLayout localCameraContainer) throws MissingVideoCallAttributeExpception;
 
-import io.agora.rtc.Constants;
-import io.agora.rtc.IRtcEngineEventHandler;
-import io.agora.rtc.RtcEngine;
-import io.agora.rtc.video.VideoCanvas;
-import io.agora.rtc.video.VideoEncoderConfiguration;
+    // Channel Methods
+    boolean joinChannel(String channelName);
+    boolean createChannel(String channelName, String extraChannelInfo);
+    boolean leaveChannel();
 
-public abstract class VideoCall {
-    private String apiID;
-    private Activity currentActivity;
-    private RtcEngine rtcEngine;
-    private Map<String,Object> sessionData;
-    private List<Exception> exceptions;
+    // Actions
+    boolean muteLocalAudio(boolean isMuted);
+    boolean muteLocalVideo(boolean isMuted);
+    boolean muteRemoteVideo(int uid, boolean isMuted )
 
-    // Views for Camera
-    private FrameLayout remoteVideoContainer;
-    private FrameLayout localCameraContainer;
-    private ImageView disabledRemoteCamera;
-
-    private final IRtcEngineEventHandler rtcEventHandler = new IRtcEngineEventHandler() {
-        // Channel is created
-        @Override
-        public void onFirstRemoteVideoDecoded(int uid, int width, int height, int elapsed) {
-            currentActivity.runOnUiThread(()->setupRemoteVideoStream(uid));
-        }
-
-        // remote user has left channel
-        @Override
-        public void onUserOffline(int uid, int reason) {
-            currentActivity.runOnUiThread(() -> onRemoteUserLeft());
-        }
-
-        // remote stream has been toggled
-        @Override
-        public void onUserMuteVideo(final int uid, final boolean toggle) {
-            currentActivity.runOnUiThread(() -> onRemoteUserVideoToggle(uid, toggle));
-        }
-
-    };
-
-    public VideoCall(Activity currentActivity, String apiID ){
-        this.currentActivity = currentActivity;
-        this.apiID = apiID;
-        this.sessionData = new HashMap<>();
-        initSession();
-    }
-
-    private void initSession() {
-        try{
-            rtcEngine = RtcEngine.create(currentActivity.getBaseContext(), apiID, rtcEventHandler);
-        }catch (Exception e){
-            e.printStackTrace();
-            exceptions.add(e);
-        }
-        configureSession();
-    }
-
-    private void configureSession() {
-        rtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_COMMUNICATION);
-        rtcEngine.enableVideo();
-        rtcEngine.setVideoEncoderConfiguration(new VideoEncoderConfiguration(VideoEncoderConfiguration.VD_1920x1080,
-                VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_30,
-                VideoEncoderConfiguration.STANDARD_BITRATE,
-                VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT));
-    }
-
-    private void setupLocalVideoFeed() {
-        SurfaceView callerCameraSurface = RtcEngine.CreateRendererView(currentActivity.getBaseContext());
-        callerCameraSurface.setZOrderMediaOverlay(true);
-        localCameraContainer.addView(callerCameraSurface);
-        rtcEngine.setupLocalVideo( new VideoCanvas(callerCameraSurface, VideoCanvas.RENDER_MODE_FIT, 0));        //  We leave the uid parameter blank so the SDK can handle creating a dynamic id for each user.
-    }
-
-    private void setupRemoteVideoStream(int uid){
-        SurfaceView videoSurface = RtcEngine.CreateRendererView(currentActivity.getBaseContext());
-        remoteVideoContainer.addView(videoSurface);
-        rtcEngine.setupRemoteVideo( new VideoCanvas(videoSurface, VideoCanvas.RENDER_MODE_FIT,uid));
-        rtcEngine.setRemoteSubscribeFallbackOption(Constants.STREAM_FALLBACK_OPTION_AUDIO_ONLY);
-    }
-
-    private void onRemoteUserVideoToggle(int uid, boolean toggle){
-        SurfaceView videoSurface = (SurfaceView) remoteVideoContainer.getChildAt(0);
-        videoSurface.setVisibility(toggle ? View.GONE : View.VISIBLE);
-
-        // If disabledRemoteCamera view is set then add the icon to let the other user know remote video has been disabled
-        if( disabledRemoteCamera != null)
-            if(toggle){
-                ImageView noCamera = disabledRemoteCamera;
-                remoteVideoContainer.addView(noCamera);
-            } else {
-                ImageView noCamera = (ImageView) remoteVideoContainer.getChildAt(1);
-                if(noCamera != null) {
-                    remoteVideoContainer.removeView(noCamera);
-                }
-            }
-    }
-
-    private void onRemoteUserLeft(){
-        remoteVideoContainer.removeAllViews();
-    }
-
-    public Map<String, Object> getSessionData() {
-        sessionData.put("apiID", apiID);
-        sessionData.put("rtcEngine", rtcEngine);
-        sessionData.put("currentActivity", currentActivity);
-        sessionData.put("exceptions", exceptions);          // Put List of exceptions into Map
-        return sessionData;
-    }
-
-    /**
-     *
-     * @param remoteVideoContainer Remote video container to put the remote camera view into
-     * @param localCameraContainer Local video Camera container to put the user camera view into
-     * @param disabledRemoteCamera Icon for letting user know the remote camera is disabled, Can be set as null
-     * @throws MissingVideoCallAttributeExpception Thorws if Ether remoteVideoContainer or localCameraContainer is null
-     */
-    public void setCameraViews(FrameLayout remoteVideoContainer, FrameLayout localCameraContainer, ImageView disabledRemoteCamera) throws MissingVideoCallAttributeExpception{
-        if( remoteVideoContainer == null )
-            throw new MissingVideoCallAttributeExpception("Null Reference to Remote Video Container...");
-        else if( localCameraContainer == null )
-            throw new MissingVideoCallAttributeExpception("Null Reference to Local Camera Container...");
-        this.remoteVideoContainer = remoteVideoContainer;
-        this.localCameraContainer = localCameraContainer;
-        this.disabledRemoteCamera = disabledRemoteCamera;
-    }
-
-
-    /**
-     * Call This method inside onClickListener of the <bold>leave</bold> button
-     * Update the UI after calling this function, like making audio,video toggle buttons invisible or go to another activity etc.
-     */
-    public void leaveChannel(){
-        rtcEngine.leaveChannel();
-    }
-
-    /**
-     * Call this inside onAudioMuteClick Listener
-     * @param isMuted , if true mutes
-     */
-    public void muteLocalAudio(Boolean isMuted){
-        rtcEngine.muteLocalAudioStream(isMuted);
-    }
-
-    /**
-     * Call this inside onVideoMuteClicked
-     * @param isMuted
-     */
-    public void muteLocalVideo(Boolean isMuted){
-        rtcEngine.muteLocalVideoStream(isMuted);
-        localCameraContainer.setVisibility(isMuted ? View.GONE : View.VISIBLE);
-        SurfaceView videoSurface = (SurfaceView) localCameraContainer.getChildAt(0);
-        videoSurface.setZOrderMediaOverlay( !isMuted );
-        videoSurface.setVisibility(isMuted ? View.GONE : View.VISIBLE);
-    }
 }

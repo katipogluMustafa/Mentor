@@ -10,7 +10,7 @@ public class User {
     private String surname;
     // Appointment[] appointments;
     // Review[] review;
-    // VideoCall[] callHistory;
+    // AbstractVideoCall[] callHistory;
     // boolean isOnline;
 
     public User(){
