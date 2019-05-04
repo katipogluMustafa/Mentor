@@ -1,9 +1,11 @@
 package Controller;
 
 import android.app.Activity;
+import android.media.Image;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,17 +17,17 @@ import io.agora.rtc.RtcEngine;
 import io.agora.rtc.video.VideoCanvas;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
-public class VideoCall {
+public abstract class VideoCall {
     private String apiID;
     private Activity currentActivity;
     private RtcEngine rtcEngine;
     private Map<String,Object> sessionData;
     private List<Exception> exceptions;
-    private View onJoinChannelView;
 
-    // Containers for local and remote camera
-    private int remoteVideoContainerFrameLayoutID;
-    private int localCameraContainerFrameLayoutID;
+    // Views for Camera
+    private FrameLayout remoteVideoContainer;
+    private FrameLayout localCameraContainer;
+    private ImageView disabledRemoteCamera;
 
     private final IRtcEngineEventHandler rtcEventHandler = new IRtcEngineEventHandler() {
         // Channel is created
@@ -74,41 +76,39 @@ public class VideoCall {
                 VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT));
     }
 
-    /**
-     * Call This method inside onClickListener of the join button
-     * Update the UI after calling this function, like making audio,video toggle buttons visible or leave conversation button etc.
-     * @throws MissingVideoCallAttributeExpception Don't forget to set onJoinView, otherwise you get this exception
-     */
-    public void onJoinChannel(int localCameraContainerFrameLayoutID, int remoteVideoContainerFrameLayoutID) throws MissingVideoCallAttributeExpception{
-        if( onJoinChannelView == null )
-            throw new MissingVideoCallAttributeExpception("You need to set onJoinChannelView...");
-        this.remoteVideoContainerFrameLayoutID = remoteVideoContainerFrameLayoutID;
-        this.localCameraContainerFrameLayoutID = localCameraContainerFrameLayoutID;
-        setupLocalVideoFeed();
-    }
-
     private void setupLocalVideoFeed() {
-        FrameLayout callerCameraContainer = currentActivity.findViewById(localCameraContainerFrameLayoutID);
         SurfaceView callerCameraSurface = RtcEngine.CreateRendererView(currentActivity.getBaseContext());
         callerCameraSurface.setZOrderMediaOverlay(true);
-        callerCameraContainer.addView(callerCameraSurface);
+        localCameraContainer.addView(callerCameraSurface);
         rtcEngine.setupLocalVideo( new VideoCanvas(callerCameraSurface, VideoCanvas.RENDER_MODE_FIT, 0));        //  We leave the uid parameter blank so the SDK can handle creating a dynamic id for each user.
     }
 
     private void setupRemoteVideoStream(int uid){
-        FrameLayout remoteVideoContainer = currentActivity.findViewById(remoteVideoContainerFrameLayoutID);
         SurfaceView videoSurface = RtcEngine.CreateRendererView(currentActivity.getBaseContext());
-        remoteVideoContainer.addView(remoteVideoContainer);
+        remoteVideoContainer.addView(videoSurface);
         rtcEngine.setupRemoteVideo( new VideoCanvas(videoSurface, VideoCanvas.RENDER_MODE_FIT,uid));
         rtcEngine.setRemoteSubscribeFallbackOption(Constants.STREAM_FALLBACK_OPTION_AUDIO_ONLY);
     }
 
-    /**
-     * You need to set the otherwise join channel will not be working properly
-     * @param onJoinChannelView View of the onClickListener of the join channel button
-     */
-    public void setOnJoinChannelView(View onJoinChannelView) {
-        this.onJoinChannelView = onJoinChannelView;
+    private void onRemoteUserVideoToggle(int uid, boolean toggle){
+        SurfaceView videoSurface = (SurfaceView) remoteVideoContainer.getChildAt(0);
+        videoSurface.setVisibility(toggle ? View.GONE : View.VISIBLE);
+
+        // If disabledRemoteCamera view is set then add the icon to let the other user know remote video has been disabled
+        if( disabledRemoteCamera != null)
+            if(toggle){
+                ImageView noCamera = disabledRemoteCamera;
+                remoteVideoContainer.addView(noCamera);
+            } else {
+                ImageView noCamera = (ImageView) remoteVideoContainer.getChildAt(1);
+                if(noCamera != null) {
+                    remoteVideoContainer.removeView(noCamera);
+                }
+            }
+    }
+
+    private void onRemoteUserLeft(){
+        remoteVideoContainer.removeAllViews();
     }
 
     public Map<String, Object> getSessionData() {
@@ -117,5 +117,51 @@ public class VideoCall {
         sessionData.put("currentActivity", currentActivity);
         sessionData.put("exceptions", exceptions);          // Put List of exceptions into Map
         return sessionData;
+    }
+
+    /**
+     *
+     * @param remoteVideoContainer Remote video container to put the remote camera view into
+     * @param localCameraContainer Local video Camera container to put the user camera view into
+     * @param disabledRemoteCamera Icon for letting user know the remote camera is disabled, Can be set as null
+     * @throws MissingVideoCallAttributeExpception Thorws if Ether remoteVideoContainer or localCameraContainer is null
+     */
+    public void setCameraViews(FrameLayout remoteVideoContainer, FrameLayout localCameraContainer, ImageView disabledRemoteCamera) throws MissingVideoCallAttributeExpception{
+        if( remoteVideoContainer == null )
+            throw new MissingVideoCallAttributeExpception("Null Reference to Remote Video Container...");
+        else if( localCameraContainer == null )
+            throw new MissingVideoCallAttributeExpception("Null Reference to Local Camera Container...");
+        this.remoteVideoContainer = remoteVideoContainer;
+        this.localCameraContainer = localCameraContainer;
+        this.disabledRemoteCamera = disabledRemoteCamera;
+    }
+
+
+    /**
+     * Call This method inside onClickListener of the <bold>leave</bold> button
+     * Update the UI after calling this function, like making audio,video toggle buttons invisible or go to another activity etc.
+     */
+    public void leaveChannel(){
+        rtcEngine.leaveChannel();
+    }
+
+    /**
+     * Call this inside onAudioMuteClick Listener
+     * @param isMuted , if true mutes
+     */
+    public void muteLocalAudio(Boolean isMuted){
+        rtcEngine.muteLocalAudioStream(isMuted);
+    }
+
+    /**
+     * Call this inside onVideoMuteClicked
+     * @param isMuted
+     */
+    public void muteLocalVideo(Boolean isMuted){
+        rtcEngine.muteLocalVideoStream(isMuted);
+        localCameraContainer.setVisibility(isMuted ? View.GONE : View.VISIBLE);
+        SurfaceView videoSurface = (SurfaceView) localCameraContainer.getChildAt(0);
+        videoSurface.setZOrderMediaOverlay( !isMuted );
+        videoSurface.setVisibility(isMuted ? View.GONE : View.VISIBLE);
     }
 }
