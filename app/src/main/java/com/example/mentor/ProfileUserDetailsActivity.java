@@ -93,6 +93,7 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         surname = findViewById(R.id.user_details_surname);
 
         // EditText Initial Values
+        databaseReference.child("isDoctor").setValue(0);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -120,7 +121,10 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
 
     private void initFields(Map<String, Object> content) {
         if( content == null )
-            Snackbar.make( prioritized_name , "No Internet Connection", Snackbar.LENGTH_LONG).show();
+            if( currentUser.isAnonymous() )
+                Snackbar.make( prioritized_name , "Anonymous User, Please Fill The Fields", Snackbar.LENGTH_LONG).show();
+            else
+                Snackbar.make( prioritized_name , "No Internet Connection", Snackbar.LENGTH_LONG).show();
         else
             for(Map.Entry<String,Object> entries : content.entrySet() )
                 switch (entries.getKey()){

@@ -109,7 +109,10 @@ public class UserProfileActivity extends AppCompatActivity{
 
     private void updateFields(Map<String, Object> content) {
         if( content == null )
-            Snackbar.make( prioritized_name , "No Internet Connection", Snackbar.LENGTH_LONG).show();
+            if( currentUser.isAnonymous() )
+                Snackbar.make( prioritized_name , "Anonymous User, Please Fill The Fields", Snackbar.LENGTH_LONG).show();
+            else
+                Snackbar.make( prioritized_name , "No Internet Connection", Snackbar.LENGTH_LONG).show();
         else
             for(Map.Entry<String,Object> entries : content.entrySet() )
                 switch (entries.getKey()){

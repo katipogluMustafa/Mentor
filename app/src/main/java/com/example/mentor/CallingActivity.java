@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import com.example.mentor.R;
 
 public class CallingActivity extends AppCompatActivity implements View.OnClickListener {
 
