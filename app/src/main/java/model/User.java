@@ -90,25 +90,45 @@ public class User {
         double currentBalance;
         int currentAge;
         boolean currentIsSpecialUser;
+        Blood currnetBlood;
+        Gender currentGender;
         HashMap<String, Object> input = (HashMap<String, Object>) data;
 
+        // Balance Null Check
         Double balance = (Double)input.get("balance");
         if( balance != null)
             currentBalance = balance;
         else
             currentBalance = 0.0;
 
+        // Age Null Check
         Long age = (Long)input.get("age");
         if( age != null )
             currentAge = (int)((long)age);
         else
             currentAge = 0;
 
+        // isSpecialUser Null Check
         Boolean isSpecialUser = (Boolean)input.get("isSpecialUser");
         if( isSpecialUser != null)
             currentIsSpecialUser = isSpecialUser;
         else
             currentIsSpecialUser = false;
+
+        // Blood Null Check
+        Blood blood = (Blood)input.get("blood");
+
+        if( blood != null)
+            currnetBlood = blood;
+        else
+            currnetBlood = Blood.UNDEFINED;
+
+        // Gender Null Check
+        Gender gender = (Gender)input.get("gender");
+        if( gender != null)
+            currentGender = gender;
+        else
+            currentGender = Gender.UNDEFINED;
 
         User newUser = new User(
                 (String)input.get("uid"),
@@ -116,8 +136,8 @@ public class User {
                 (String)input.get("prioritizedName"),
                 currentBalance,
                 currentAge,
-                Blood.bloodFactory((int)((long)((Long)input.get("blood")))),
-                Gender.genderFactory((int)((long)((Long)input.get("gender")))),
+                currnetBlood,
+                currentGender,
                 (String)input.get("name"),
                 (String)input.get("surname"),
                 (List<String>)input.get("appointments"),
@@ -137,7 +157,7 @@ public class User {
         if( user == null )
             return false;
 
-        if( !uploadUser(user) )
+        if( !userQuery.uploadUser(user) )
             throw userQuery.getException();
 
         return true;

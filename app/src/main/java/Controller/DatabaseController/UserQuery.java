@@ -97,6 +97,15 @@ public class UserQuery extends FirebaseDatabaseQuery {
         return isUploadSuccessful;
     }
 
+    public <T> void uploadUserData(String key, T value){
+        uploadData(currentUserDatabaseReference,key,value);
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+
 
     /**
      * Search lastFoundUser from the database
@@ -156,8 +165,7 @@ public class UserQuery extends FirebaseDatabaseQuery {
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
-*/
-    public void uploadUserData(String key, String value){
+        public void uploadUserData(String key, String value){
         uploadData(currentUserDatabaseReference,key,value);
     }
 
@@ -184,10 +192,6 @@ public class UserQuery extends FirebaseDatabaseQuery {
     public void uploadUserData(String key, Blood value){
         uploadData(currentUserDatabaseReference,key,value);
     }
-
-    public Exception getException() {
-        return exception;
-    }
-
+*/
 
 }

@@ -1,18 +1,36 @@
 package model;
 
+
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Appointment {
     private User consumerUser;
     private User hostUser;
     private Date timeStamp;
-    private boolean isCreationCompeted;
-    private boolean isCanceled;
+    private Status status;
+
+    enum Status{
+        CREATED, CANCELED,COMPLETED
+    }
 
     public Appointment(User consumerUser, User hostUser, Date timeStamp) {
         this.consumerUser = consumerUser;
         this.hostUser = hostUser;
         this.timeStamp = timeStamp;
+        status = Status.CREATED;
+    }
+
+    public Map<String, Object> toMap(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("consumerUser", consumerUser);
+        map.put("hostUser", hostUser);
+        map.put("timeStamp", timeStamp);
+        map.put("status", status);
+
+        return map;
     }
 
     public User getConsumerUser() {
@@ -39,19 +57,11 @@ public class Appointment {
         this.timeStamp = timeStamp;
     }
 
-    public boolean isCreationCompeted() {
-        return isCreationCompeted;
+    public void signAsCompleted(){
+        this.status = Status.COMPLETED;
     }
 
-    public void setCreationCompeted(boolean creationCompeted) {
-        isCreationCompeted = creationCompeted;
-    }
-
-    public boolean isCanceled() {
-        return isCanceled;
-    }
-
-    public void setCanceled(boolean canceled) {
-        isCanceled = canceled;
+    public void cancelAppointment(){
+        this.status = Status.CANCELED;
     }
 }

@@ -16,6 +16,11 @@ public abstract class FirebaseDatabaseQuery {
 
     }
 
+    public <T> void uploadData(DatabaseReference ref, String key, T value){
+        ref.child(key).setValue(value);
+    }
+
+    /*
     public void uploadData(DatabaseReference ref, String key, String value){
         ref.child(key).setValue(value);
     }
@@ -43,7 +48,7 @@ public abstract class FirebaseDatabaseQuery {
     public void uploadData(DatabaseReference ref, String key, Blood value){
         ref.child(key).setValue(value);
     }
-
+    */
 
     public FirebaseDatabase getDatabase() {
         return database;
