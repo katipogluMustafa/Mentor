@@ -1,6 +1,4 @@
-package Controller;
-
-import java.io.IOException;
+package Controller.VideoCallController;
 
 public class MissingVideoCallAttributeExpception extends VideoCallException {
     public MissingVideoCallAttributeExpception(String msg){

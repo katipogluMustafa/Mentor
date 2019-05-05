@@ -1,4 +1,4 @@
-package Controller;
+package Controller.VideoCallController;
 
 
 public interface VideoCall {

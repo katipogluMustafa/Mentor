@@ -1,4 +1,4 @@
-package Controller;
+package Controller.VideoCallController;
 
 import java.io.IOException;
 

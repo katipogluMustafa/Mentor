@@ -1,4 +1,4 @@
-package Controller;
+package Controller.VideoCallController;
 
 import android.app.Activity;
 import android.view.SurfaceView;
@@ -7,8 +7,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import io.agora.rtc.Constants;

@@ -1,6 +1,5 @@
-package Controller;
+package Controller.VideoCallController;
 
-import android.Manifest;
 import android.app.Activity;
 
 import java.util.Date;
@@ -45,7 +44,7 @@ public class VideoCallInitiator extends AbstractVideoCall {
         if( callReceiver == null)
             throw new MissingVideoCallAttributeExpception("Video Call Null Call Receiver : Call Receiver is not set");
 
-        if ( !joinChannel(caller.getFirebaseUser().getUid()) )          // Channel Name is the UID of the caller
+        if ( !joinChannel(caller.getUid()) )          // Channel Name is the UID of the caller
             throw getException();
 
         initCallTimeStamp = new Date();
