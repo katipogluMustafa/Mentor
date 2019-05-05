@@ -1,12 +1,12 @@
 package model;
 
-import com.google.firebase.auth.FirebaseUser;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
-    private String uid;
+    private final String uid;
     private boolean isSpecialUser;
 
     private String prioritizedName;
@@ -16,24 +16,19 @@ public class User {
     private Gender gender;
     private String name;
     private String surname;
+    private List<String> appointments;          // stores UID of each appointment
+    private List<String> reviews;               // stores UID of each review
+    private List<String> lastCalls;             // stores UID of each call
+    private boolean isOnline = false;
 
-
-    // Appointment[] appointments;
-    // Review[] review;
-    // AbstractVideoCall[] callHistory;
-    // boolean isOnline;
-
-    public User(){
-        // Required
+    public User(String uid, boolean isSpecialUser, String prioritizedName, double balance, int age, Blood blood, Gender gender, String name, String surname){
+        this(uid,isSpecialUser,prioritizedName,balance,age,blood,gender,name,surname, null, null,null);
     }
 
-    private User(String prioritizedName,
-                 double balance,
-                 int age,
-                 Blood blood,
-                 Gender gender,
-                 String name,
-                 String surname){
+    public User( String uid, boolean isSpecialUser, String prioritizedName, double balance, int age, Blood blood, Gender gender, String name, String surname,
+                 List<String> appointments, List<String> reviews, List<String> lastCalls){
+        this.uid = uid;
+        this.isSpecialUser = isSpecialUser;
         this.prioritizedName = prioritizedName;
         this.balance = balance;
         this.age = age;
@@ -41,65 +36,23 @@ public class User {
         this.gender = gender;
         this.name = name;
         this.surname = surname;
+
+        if( appointments != null)
+            this.appointments = appointments;
+        else
+            this.appointments = new ArrayList<>();
+
+        if( reviews != null)
+            this.reviews = reviews;
+        else
+            this.reviews = new ArrayList<>();
+
+        if( lastCalls != null)
+            this.lastCalls = lastCalls;
+        else
+            this.lastCalls = new ArrayList<>();
+
     }
-
-    public static User userFactory(String prioritizedName,
-                                   double balance,
-                                   int age,
-                                   String blood,
-                                   String gender,
-                                   String name,
-                                   String surname){
-        if( balance < 0.0 )
-            balance = 0.0;
-
-        if( age > 120 || age < 0)
-            age = 0;
-
-
-        return new User(prioritizedName,
-                            balance,
-                            age,
-                            Blood.bloodFactory(blood),
-                            Gender.genderFactory(gender),
-                            name,
-                            surname);
-    }
-
-    public static User userFactory(String prioritizedName,
-                                   String balance,
-                                   String age,
-                                   String blood,
-                                   String gender,
-                                   String name,
-                                   String surname){
-        double userBalance;
-        try {
-            userBalance = Double.valueOf(balance);
-            if( userBalance < 0.0 )
-                userBalance = 0.0;
-        }catch (NumberFormatException e){
-            userBalance = 0.0;
-        }
-
-        int userAge;
-        try {
-            userAge = Integer.valueOf(age);
-            if( userAge > 120 || userAge < 0)
-                userAge = 0;
-        }catch (NumberFormatException e){
-            userAge = 0;
-        }
-
-        return new User(prioritizedName,
-                userBalance,
-                userAge,
-                Blood.bloodFactory(blood),
-                Gender.genderFactory(gender),
-                name,
-                surname);
-    }
-
 
     public Map<String, Object> getUserData(){
         Map<String, Object> data = new HashMap<>();
@@ -113,8 +66,59 @@ public class User {
         data.put("gender", gender.getIntValue());
         data.put("name", name);
         data.put("surname", surname);
+        data.put("appointments", appointments);
+        data.put("reviews", reviews);
+        data.put("lastCalls", lastCalls);
+        data.put("isOnline", isOnline);
 
         return data;
+    }
+
+    public static User createUser(Map<String, Object> data){
+        //TODO: Create and return user with given data
+        return null;
+    }
+
+
+    public void uploadUserField(String field){
+
+        switch (field){
+            case "isSpecialUser":
+                //
+                break;
+            case "prioritizedName":
+                //
+                break;
+            case "balance":
+                //
+                break;
+            case "blood":
+                //
+                break;
+            case "gender":
+                //
+                break;
+            case "name":
+                //
+                break;
+            case "surname":
+                //
+                break;
+            case "appointments":
+                //
+                break;
+            case "reviews":
+                //
+                break;
+            case "lastCalls":
+                //
+                break;
+            case "isOnline":
+                //
+                break;
+        }
+
+
     }
 
     public String getPrioritizedName() {
@@ -129,9 +133,18 @@ public class User {
         return balance;
     }
 
+    public void setBalance(String balance){
+        if( balance == null)
+            return;
+
+        double actualBalance = Double.valueOf(balance);
+        this.balance = actualBalance;
+    }
+
     public void setBalance(double balance) {
         if( balance < 0.0)
             balance = 0.0;
+
         this.balance = balance;
     }
 
@@ -142,11 +155,20 @@ public class User {
     public void setAge(int age) {
         if( age > 120 || age < 0)
             age = 0;
+
         this.age = age;
     }
 
     public Blood getBlood() {
         return blood;
+    }
+
+    public void setBlood(String blood) {
+        this.blood = Blood.bloodFactory(blood);
+    }
+
+    public void setBlood(int intValue) {
+        this.blood = Blood.bloodFactory(intValue);
     }
 
     public void setBlood(Blood blood) {
@@ -155,6 +177,14 @@ public class User {
 
     public Gender getGender() {
         return gender;
+    }
+
+    public void setGender(String gender){
+        this.gender = Gender.genderFactory(gender);
+    }
+
+    public void setGender(int intValue){
+        this.gender = Gender.genderFactory(intValue);
     }
 
     public void setGender(Gender gender) {
@@ -190,7 +220,35 @@ public class User {
         return uid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public List<String> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<String> appointments) {
+        this.appointments = appointments;
+    }
+
+    public List<String> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<String> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<String> getLastCalls() {
+        return lastCalls;
+    }
+
+    public void setLastCalls(List<String> lastCalls) {
+        this.lastCalls = lastCalls;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 }

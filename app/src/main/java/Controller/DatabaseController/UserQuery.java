@@ -7,13 +7,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import model.User;
 
-// For just now it is abstract
+
 public abstract class UserQuery extends FirebaseDatabaseQuery {
     private DatabaseReference userDatabaseReference = getDatabaseReference().child("users");
 
@@ -112,19 +114,42 @@ public abstract class UserQuery extends FirebaseDatabaseQuery {
      * @param uid the uid of the lastFoundUser we search
      */
     private void searchUser(String uid){
-        userDatabaseReference.addValueEventListener(new ValueEventListener() {
+        userDatabaseReference.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for( DataSnapshot snapshot : dataSnapshot.getChildren() )
-                    if( Objects.equals( ((User)snapshot.getValue()).getUid(), uid) )
-                        lastFoundUser = (User)snapshot.getValue();
+                if( dataSnapshot.exists() )
+                    lastFoundUser = User.createUser((HashMap<String,Object>)dataSnapshot.getValue());
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
 
+    public void uploadData(String key, String value){
+
+    }
+
+    public void uploadData(String key, double value){
+
+    }
+
+    public void uploadData(String key, int value){
+
+    }
+
+    public void uploadData(String key, List<String> value){
+
+    }
+
+    public void uploadData(String key, boolean value){
+
+    }
+
+
+
     public Exception getException() {
         return exception;
     }
+
+
 }
