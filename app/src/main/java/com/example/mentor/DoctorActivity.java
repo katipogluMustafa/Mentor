@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class DoctorActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private String doctorUID;
 
     private static final int PERMISSION_REQ_ID = 22;
     private static final String[] REQUESTED_PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
@@ -67,6 +68,7 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void getPassedStrings(Intent intent) {
+        doctorUID = intent.getStringExtra("doctorUID");
         doctorNameTextView.setText(intent.getStringExtra("doctorName"));
         doctorSpecialistTextView.setText(intent.getStringExtra("doctorSpecialist"));
     }
@@ -89,13 +91,14 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.activity_doctor_bookAppointmentButton:
-                startActivity(new Intent(this, BookAppointmentCalenderActivity.class));
-
+                Intent intent = new Intent(this, BookAppointmentCalenderActivity.class);
+                intent.putExtra("doctorUID",doctorUID);
+                startActivity(intent);
+                break;
 
             case R.id.activity_doctor_backImageButton:
                 onBackPressed();
                 break;
-
 
         }
     }

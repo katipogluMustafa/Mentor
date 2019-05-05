@@ -23,7 +23,7 @@ public class AppointmentQuery extends FirebaseDatabaseQuery {
          currentAppointmentReference= databaseReference.child(appointmentUID);
     }
 
-    public static String appointmentFactory(Appointment appointment){
+    public static String appointmentFactory(@NonNull Appointment appointment){
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference().child("appointments");
         String uid = ref.push().getKey();                                // Create appointment and get UID
         Map<String, Object> appointmentDetails = appointment.toMap();

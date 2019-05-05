@@ -1,5 +1,6 @@
 package com.example.mentor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -11,11 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mentor.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.RecyclerViewItem;
 import ui.RecyclerViewAdapter;
 
 public class DoctorListActivity extends AppCompatActivity {
+
+    private List<String> doctors;
 
     private RecyclerView recyclerView;
     private ArrayList<RecyclerViewItem> recyclerViewItems;
@@ -24,6 +28,10 @@ public class DoctorListActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_list);
+
+        Intent intent = getIntent();
+        Bundle doctorBundle = intent.getBundleExtra("doctors");
+        doctors = doctorBundle.getStringArrayList("doctorList");
 
         setUp();
         setAdapter();
@@ -36,6 +44,7 @@ public class DoctorListActivity extends AppCompatActivity {
 
     private void setAdapter() {
         //TODO: Needed the database connection!
+
         //Test entries
         String[] names = getResources().getStringArray(R.array.test_array_doctor_names);
         String[] specialists = getResources().getStringArray(R.array.test_array_doctor_specialists);

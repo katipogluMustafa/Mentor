@@ -3,6 +3,7 @@ package com.example.mentor;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,12 +13,21 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import model.Gender;
+import model.Speciality;
 import model.SpinnerItem;
 import ui.SpinnerAdapter;
 
+@SuppressWarnings("unchecked")
 public class FindDoctorActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -88,6 +98,22 @@ public class FindDoctorActivity extends AppCompatActivity implements View.OnClic
 
     private boolean handleFindDoctorButton() {
         //TODO: FindDoctor button was clicked!
+        String chosenSpeciality = (String)specialistSpinner.getSelectedItem();
+        Speciality speciality = Speciality.specialityFactory(chosenSpeciality);
+
+        String chosenGender = (String)genderSpinner.getSelectedItem();
+        Gender gender = Gender.genderFactory(chosenGender);
+/*
+        ArrayList<String> doctorsWithSameSpeciality;
+        .orderByChild("speciality").equalTo(speciality).orderByChild("gender").equalTo(gender);
+        FirebaseDatabase.getInstance().getReference().child("users").orderByChild("speciality").equalTo( speciality.getIntValue() ).
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        })
+*/
         return true;
     }
 
