@@ -1,6 +1,9 @@
 package model;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class User {
+    private FirebaseUser firebaseUser;
     private String prioritizedName;
     private double balance;
     private int age;
@@ -149,4 +152,13 @@ public class User {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    public FirebaseUser getFirebaseUser() {
+        return firebaseUser;
+    }
+
+    public void associateFirebaseUser( FirebaseUser firebaseUser){
+        this.firebaseUser = firebaseUser;
+    }
+
 }

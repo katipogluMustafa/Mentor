@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class AbstractVideoCall implements VideoCall{
     private Activity currentActivity;
     private RtcEngine rtcEngine;
     private Map<String,Object> sessionData;
-    private List<Exception> exceptions;
+    private VideoCallException exception;
 
     // Views for Camera
     private FrameLayout remoteVideoContainer;
@@ -61,7 +62,6 @@ public class AbstractVideoCall implements VideoCall{
             rtcEngine = RtcEngine.create(currentActivity.getBaseContext(), apiID, rtcEventHandler);
         }catch (Exception e){
             e.printStackTrace();
-            exceptions.add(e);
         }
         configureSession();
     }
@@ -114,7 +114,7 @@ public class AbstractVideoCall implements VideoCall{
         sessionData.put("apiID", apiID);
         sessionData.put("rtcEngine", rtcEngine);
         sessionData.put("currentActivity", currentActivity);
-        sessionData.put("exceptions", exceptions);          // Put List of exceptions into Map
+        sessionData.put("exception", exception);
         return sessionData;
     }
 
@@ -154,8 +154,13 @@ public class AbstractVideoCall implements VideoCall{
             case 0:
                 return true;
             case Constants.ERR_INVALID_ARGUMENT:
+                exception = new VideoCallInvalidArgumentException("Create Channel: Invalid Channel Name or Channel Info");
+                return false;
             case Constants.ERR_NOT_READY:
+                exception = new VideoCallChannelNotReadyException("Create Channel: Channel Not Ready");
+                return false;
             case Constants.ERR_REFUSED:
+                exception = new VideoCallConnectionRefusedException("Create Channel: Connection Refused");
                 return false;
         }
 
@@ -213,5 +218,7 @@ public class AbstractVideoCall implements VideoCall{
         return rtcEngine.switchCamera() == 0;
     }
 
-
+    public VideoCallException getException() {
+        return exception;
+    }
 }

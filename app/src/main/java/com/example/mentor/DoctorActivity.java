@@ -1,20 +1,30 @@
 package com.example.mentor;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.google.android.material.snackbar.Snackbar;
 
 public class DoctorActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+    private static final int PERMISSION_REQ_ID = 22;
+    private static final String[] REQUESTED_PERMISSIONS = {Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
 
     private CircleImageView doctorCircularImage;
     private TextView doctorNameTextView;
@@ -75,7 +85,7 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.activity_doctor_callLinearLayout:
-                startActivity(new Intent(this, CallingActivity.class));
+                callDoctor();
                 break;
 
             case R.id.activity_doctor_bookAppointmentButton:
@@ -90,9 +100,35 @@ public class DoctorActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    private void callDoctor() {
+        if( checkSelfPermission( REQUESTED_PERMISSIONS[0], PERMISSION_REQ_ID) && checkSelfPermission(REQUESTED_PERMISSIONS[1], PERMISSION_REQ_ID) ){
+            startActivity(new Intent(this, CallingActivity.class));
+        }
+    }
+
     private boolean handlePhotos() {
         //TODO: The user wants to see the doctor photos!
         return false;
+    }
+
+    public boolean checkSelfPermission(String permission, int requestCode){
+        if( ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED ){
+            ActivityCompat.requestPermissions(this, REQUESTED_PERMISSIONS, requestCode);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch ( requestCode ){
+            case PERMISSION_REQ_ID:
+                if( grantResults[0] != PackageManager.PERMISSION_GRANTED || grantResults[1] != PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this,"You need to give permissions first", Toast.LENGTH_LONG).show();
+                    super.onBackPressed();      // go back to last activity
+                }
+                break;
+        }
     }
 
     public void goBack(View v){
