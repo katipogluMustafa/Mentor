@@ -1,4 +1,4 @@
-package Controller;
+package Controller.DatabaseController;
 
-public abstract class AppointmentQuery extends DatabaseQuery {
+public abstract class AppointmentQuery extends FirebaseDatabaseQuery {
 }

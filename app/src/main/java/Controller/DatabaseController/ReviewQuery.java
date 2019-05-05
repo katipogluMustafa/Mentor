@@ -1,4 +1,5 @@
-package Controller;
+package Controller.DatabaseController;
 
-public abstract class ReviewQuery extends DatabaseQuery {
+// For just now it is abstract
+public abstract class ReviewQuery extends FirebaseDatabaseQuery {
 }

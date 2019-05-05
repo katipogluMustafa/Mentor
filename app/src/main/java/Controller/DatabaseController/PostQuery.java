@@ -1,4 +1,5 @@
-package Controller;
+package Controller.DatabaseController;
 
-public abstract class PostQuery extends DatabaseQuery {
+// For just now it is abstract
+public abstract class PostQuery extends FirebaseDatabaseQuery {
 }
