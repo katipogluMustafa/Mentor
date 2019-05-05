@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import Controller.DatabaseController.UserQuery;
 
+@SuppressWarnings("unchecked")
 public class User {
     private  UserQuery userQuery;
 
@@ -80,15 +80,35 @@ public class User {
     }
 
     public static User createUser(Map<String, Object> data){
-        //TODO: Create and return user with given data
-        return null;
+        if( data == null)
+            return null;
+
+        User user;
+        user = new User(
+                (String)data.get("uid"),
+                (boolean)data.get("isSpecialUser"),
+                (String)data.get("prioritizedName"),
+                (double)data.get("balance"),
+                (int)data.get("age"),
+                (Blood)data.get("blood"),
+                (Gender)data.get("gender"),
+                (String)data.get("name"),
+                (String)data.get("surname"),
+                (List<String>)data.get("appointments"),
+                (List<String>)data.get("reviews"),
+                (List<String>)data.get("lastCalls"),
+                );
+        user.setOnline( (boolean)data.get("isOnline") );
+
+        return user;
     }
 
-    public boolean uploadUser(User user){
+    public boolean uploadUser(User user) throws Exception {
         if( user == null )
             return false;
 
-        uploadUser(user);                           //TODO: Check Exceptions
+        if( !uploadUser(user) )
+            throw userQuery.getException();
 
         return true;
     }
