@@ -17,7 +17,7 @@ import model.Blood;
 import model.Gender;
 import model.User;
 
-
+@SuppressWarnings("unchecked")
 public class UserQuery extends FirebaseDatabaseQuery {
     private DatabaseReference userDatabaseReference = getDatabaseReference().child("users");
     private String currentUserID;
@@ -97,17 +97,19 @@ public class UserQuery extends FirebaseDatabaseQuery {
         return isUploadSuccessful;
     }
 
+
     /**
      * Search lastFoundUser from the database
      * @param uid UID of the lastFoundUser
      * @return User that we found
      * @throws DatabaseQueryException on database search time out
      */
+    /*
     public User getUser(String uid) throws DatabaseQueryException{              //TODO: Unit Test
-        lastFoundUser = null;                                                    // first set the lastFoundUser ass null
-        int timeLimit = 3000;                                           // set the time limit
-        isSearchDone = false;                                           // flag for checking is search done
-        while( !isSearchDone  && timeLimit > 0){                        // Wait while we search
+        lastFoundUser = null;                                                   // first set the lastFoundUser ass null
+        int timeLimit = 3000;                                                   // set the time limit
+        isSearchDone = false;                                                   // flag for checking is search done
+        while( !isSearchDone  && timeLimit > 0){                                // Wait while we search
             (new Handler()).postDelayed( ()->{}, 200);
             timeLimit -= 200;
         }
@@ -118,22 +120,43 @@ public class UserQuery extends FirebaseDatabaseQuery {
         return lastFoundUser;
     }
 
+    public User getUser(){
+        return getUser(currentUserID);
+    }
+
+    public User getUser(String uid){
+        userDatabaseReference.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                lastFoundUser = User.createUser((HashMap<String,Object>)dataSnapshot.getValue());
+                if( lastFoundUser == null)
+                    exception = new DatabaseQueryNotFoundException("User not found...");
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+        return lastFoundUser;
+    }
+*/
     /**
      * Helper method for getUser
      * @param uid the uid of the lastFoundUser we search
      */
+/*
     private void searchUser(String uid){
         userDatabaseReference.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if( dataSnapshot.exists() )
                     lastFoundUser = User.createUser((HashMap<String,Object>)dataSnapshot.getValue());
+                else
+                    exception = new DatabaseQueryNotFoundException("User not found...");
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
-
+*/
     public void uploadUserData(String key, String value){
         uploadData(currentUserDatabaseReference,key,value);
     }

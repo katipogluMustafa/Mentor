@@ -1,34 +1,26 @@
 package model;
 
+import java.util.List;
+
 public class Doctor extends User {
     private Speciality speciality;
     private double hourlyRate;
     private String about;
 
-    public Doctor(){
-        // Required
-    }
 
-    private Doctor(Speciality speciality, double hourlyRate, String about) {
-        this.speciality = speciality;
-        this.hourlyRate = hourlyRate;
-        this.about = about;
-        super.setSpecialUser(true);
-    }
+    public Doctor(Speciality speciality, double hourlyRate, String about, String uid, boolean isSpecialUser, String prioritizedName, double balance, int age, Blood blood, Gender gender, String name, String surname,
+                  List<String> appointments, List<String> reviews, List<String> lastCalls){
+        super(uid,isSpecialUser,prioritizedName,balance,age,blood,gender,name,surname, appointments, reviews,lastCalls);
 
-    public static Doctor doctorFactory(Speciality speciality, double hourlyRate, String about){
         if( hourlyRate < 0 )
             hourlyRate = 0;
 
         if(about == null)
             about = "";
-
-        return new Doctor(speciality,hourlyRate,about);
+        this.hourlyRate = hourlyRate;
+        this.about = about;
     }
 
-    public static Doctor doctorFactory(String speciality, double hourlyRate, String about){
-        return doctorFactory( Speciality.specialityFactory(speciality),hourlyRate,about);
-    }
 
     public Speciality getSpeciality() {
         return speciality;

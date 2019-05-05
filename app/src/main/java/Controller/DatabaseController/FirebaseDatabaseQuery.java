@@ -17,32 +17,33 @@ public abstract class FirebaseDatabaseQuery {
     }
 
     public void uploadData(DatabaseReference ref, String key, String value){
-
+        ref.child(key).setValue(value);
     }
 
     public void uploadData(DatabaseReference ref, String key, double value){
-
+        ref.child(key).setValue(value);
     }
 
     public void uploadData(DatabaseReference ref, String key, int value){
-
+        ref.child(key).setValue(value);
     }
 
     public void uploadData(DatabaseReference ref, String key, boolean value){
-
+        ref.child(key).setValue(value);
     }
 
     public void uploadData(DatabaseReference ref, String key, List<String> value){
-
+        ref.child(key).setValue(value);
     }
 
     public void uploadData(DatabaseReference ref, String key, Gender value){
-
+        ref.child(key).setValue(value);
     }
 
     public void uploadData(DatabaseReference ref, String key, Blood value){
-
+        ref.child(key).setValue(value);
     }
+
 
     public FirebaseDatabase getDatabase() {
         return database;

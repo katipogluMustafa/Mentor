@@ -24,6 +24,10 @@ public class User {
     private List<String> lastCalls;             // stores UID of each call
     private boolean isOnline = false;
 
+    public User(String uid){
+        this.uid = uid;
+    }
+
     public User(String uid, boolean isSpecialUser, String prioritizedName, double balance, int age, Blood blood, Gender gender, String name, String surname){
         this(uid,isSpecialUser,prioritizedName,balance,age,blood,gender,name,surname, null, null,null);
     }
@@ -83,24 +87,50 @@ public class User {
         if( data == null)
             return null;
 
-        User user;
-        user = new User(
-                (String)data.get("uid"),
-                (boolean)data.get("isSpecialUser"),
-                (String)data.get("prioritizedName"),
-                (double)data.get("balance"),
-                (int)data.get("age"),
-                (Blood)data.get("blood"),
-                (Gender)data.get("gender"),
-                (String)data.get("name"),
-                (String)data.get("surname"),
-                (List<String>)data.get("appointments"),
-                (List<String>)data.get("reviews"),
-                (List<String>)data.get("lastCalls"),
-                );
-        user.setOnline( (boolean)data.get("isOnline") );
+        double currentBalance;
+        int currentAge;
+        boolean currentIsSpecialUser;
+        HashMap<String, Object> input = (HashMap<String, Object>) data;
 
-        return user;
+        Double balance = (Double)input.get("balance");
+        if( balance != null)
+            currentBalance = balance;
+        else
+            currentBalance = 0.0;
+
+        Long age = (Long)input.get("age");
+        if( age != null )
+            currentAge = (int)((long)age);
+        else
+            currentAge = 0;
+
+        Boolean isSpecialUser = (Boolean)input.get("isSpecialUser");
+        if( isSpecialUser != null)
+            currentIsSpecialUser = isSpecialUser;
+        else
+            currentIsSpecialUser = false;
+
+        User newUser = new User(
+                (String)input.get("uid"),
+                currentIsSpecialUser,
+                (String)input.get("prioritizedName"),
+                currentBalance,
+                currentAge,
+                Blood.bloodFactory((int)((long)((Long)input.get("blood")))),
+                Gender.genderFactory((int)((long)((Long)input.get("gender")))),
+                (String)input.get("name"),
+                (String)input.get("surname"),
+                (List<String>)input.get("appointments"),
+                (List<String>)input.get("reviews"),
+                (List<String>)input.get("lastCalls")
+                );
+
+        Boolean isOnline = (Boolean)data.get("isOnline");
+        if( isOnline != null)
+            newUser.setOnline( isOnline );
+        else
+            newUser.setOnline( false );
+        return newUser;
     }
 
     public boolean uploadUser(User user) throws Exception {

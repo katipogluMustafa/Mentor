@@ -1,12 +1,16 @@
 package com.example.mentor;
 
 
+import Controller.DatabaseController.DatabaseQueryException;
+import Controller.DatabaseController.DatabaseQueryNotFoundException;
+import Controller.DatabaseController.UserQuery;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import model.Blood;
 import model.Gender;
 import model.SpinnerItem;
+import model.User;
 import ui.EditTextWatcher;
 import ui.UserDetailsSpinnerAdapter;
 
@@ -41,6 +45,9 @@ import java.util.Map;
 
 public class ProfileUserDetailsActivity extends AppCompatActivity {
 
+    // Database
+    UserQuery userQuery;
+    User user;
     // Firebase Database
     FirebaseDatabase database;
     DatabaseReference databaseReference;
@@ -76,6 +83,10 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
+        // Database
+        userQuery = new UserQuery(currentUser.getUid());
+        user = new User(currentUser.getUid());
+
         // Database Setup
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference().child("users").child(currentUser.getUid());
@@ -92,12 +103,13 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
         name = findViewById(R.id.user_details_name);
         surname = findViewById(R.id.user_details_surname);
 
-        // EditText Initial Values
-        databaseReference.child("isDoctor").setValue(0);
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Map<String,Object> content = (HashMap<String,Object>)dataSnapshot.getValue();
+                //user = User.createUser(content);
+                //initFields(user.getUserData());
                 initFields(content);
             }
 
@@ -106,6 +118,7 @@ public class ProfileUserDetailsActivity extends AppCompatActivity {
 
             }
         });
+
 
         // Add Listeners to EditTexts
         prioritized_name.addTextChangedListener(new EditTextWatcher(prioritized_name, "prioritized_name", currentUser.getUid()));
