@@ -2,8 +2,13 @@ package model;
 
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
-    private FirebaseUser firebaseUser;
+    private String uid;
+    private boolean isSpecialUser;
+
     private String prioritizedName;
     private double balance;
     private int age;
@@ -11,6 +16,8 @@ public class User {
     private Gender gender;
     private String name;
     private String surname;
+
+
     // Appointment[] appointments;
     // Review[] review;
     // AbstractVideoCall[] callHistory;
@@ -93,6 +100,23 @@ public class User {
                 surname);
     }
 
+
+    public Map<String, Object> getUserData(){
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("uid", uid);
+        data.put("isSpecialUser", isSpecialUser);
+        data.put("prioritizedName", prioritizedName);
+        data.put("balance", balance);
+        data.put("age", age);
+        data.put("blood", blood.getIntValue());
+        data.put("gender", gender.getIntValue());
+        data.put("name", name);
+        data.put("surname", surname);
+
+        return data;
+    }
+
     public String getPrioritizedName() {
         return prioritizedName;
     }
@@ -153,12 +177,20 @@ public class User {
         this.surname = surname;
     }
 
-    public FirebaseUser getFirebaseUser() {
-        return firebaseUser;
+
+    public void setSpecialUser(boolean specialUser) {
+        isSpecialUser = specialUser;
     }
 
-    public void associateFirebaseUser( FirebaseUser firebaseUser){
-        this.firebaseUser = firebaseUser;
+    public boolean isSpecialUser() {
+        return isSpecialUser;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }

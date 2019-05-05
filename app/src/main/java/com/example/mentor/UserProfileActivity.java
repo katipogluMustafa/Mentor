@@ -29,6 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import model.Blood;
 import model.Gender;
 
+@SuppressWarnings("unchecked")
 public class UserProfileActivity extends AppCompatActivity{
     private TextView prioritized_name;
     private TextView account_balance;
@@ -57,6 +58,8 @@ public class UserProfileActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         setup();
+
+        databaseReference.child("isSpecialUser").setValue(true);
     }
     //TODO: Broken database connection, refactor
     public void setup(){

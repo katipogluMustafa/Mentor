@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import Controller.AbstractVideoCall;
-import Controller.VideoCall;
+import Controller.VideoCallController.AbstractVideoCall;
+import Controller.VideoCallController.VideoCall;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;

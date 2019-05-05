@@ -13,6 +13,7 @@ public class Doctor extends User {
         this.speciality = speciality;
         this.hourlyRate = hourlyRate;
         this.about = about;
+        super.setSpecialUser(true);
     }
 
     public static Doctor doctorFactory(Speciality speciality, double hourlyRate, String about){
