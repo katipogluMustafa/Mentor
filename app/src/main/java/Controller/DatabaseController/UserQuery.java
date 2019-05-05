@@ -13,11 +13,15 @@ import java.util.Map;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import model.Blood;
+import model.Gender;
 import model.User;
 
 
-public abstract class UserQuery extends FirebaseDatabaseQuery {
+public class UserQuery extends FirebaseDatabaseQuery {
     private DatabaseReference userDatabaseReference = getDatabaseReference().child("users");
+    private String currentUserID;
+    private DatabaseReference currentUserDatabaseReference;
 
     private boolean isSearchDone;
     private boolean isUploadSuccessful;
@@ -25,6 +29,11 @@ public abstract class UserQuery extends FirebaseDatabaseQuery {
     private User lastFoundUser;                                                  // last found lastFoundUser
     private Exception exception;                                                 // Last Exception we got
     private boolean isExceptionUpdated;
+
+    public UserQuery(String currentUserID){
+        this.currentUserID = currentUserID;
+        currentUserDatabaseReference = userDatabaseReference.child(currentUserID);
+    }
 
     /**
      * Removes the lastFoundUser with specified uid
@@ -125,27 +134,33 @@ public abstract class UserQuery extends FirebaseDatabaseQuery {
         });
     }
 
-    public void uploadData(String key, String value){
-
+    public void uploadUserData(String key, String value){
+        uploadData(currentUserDatabaseReference,key,value);
     }
 
-    public void uploadData(String key, double value){
-
+    public void uploadUserData(String key, double value){
+        uploadData(currentUserDatabaseReference,key,value);
     }
 
-    public void uploadData(String key, int value){
-
+    public void uploadUserData(String key, int value){
+        uploadData(currentUserDatabaseReference,key,value);
     }
 
-    public void uploadData(String key, List<String> value){
-
+    public void uploadUserData(String key, boolean value){
+        uploadData(currentUserDatabaseReference,key,value);
     }
 
-    public void uploadData(String key, boolean value){
-
+    public void uploadUserData(String key, List<String> value){
+        uploadData(currentUserDatabaseReference,key,value);
     }
 
+    public void uploadUserData(String key, Gender value){
+        uploadData(currentUserDatabaseReference,key,value);
+    }
 
+    public void uploadUserData(String key, Blood value){
+        uploadData(currentUserDatabaseReference,key,value);
+    }
 
     public Exception getException() {
         return exception;
