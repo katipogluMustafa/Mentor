@@ -29,10 +29,6 @@ public class DoctorListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_list);
 
-        Intent intent = getIntent();
-        Bundle doctorBundle = intent.getBundleExtra("doctors");
-        doctors = doctorBundle.getStringArrayList("doctorList");
-
         setUp();
         setAdapter();
 

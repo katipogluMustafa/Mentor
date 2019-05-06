@@ -98,22 +98,7 @@ public class FindDoctorActivity extends AppCompatActivity implements View.OnClic
 
     private boolean handleFindDoctorButton() {
         //TODO: FindDoctor button was clicked!
-        String chosenSpeciality = (String)specialistSpinner.getSelectedItem();
-        Speciality speciality = Speciality.specialityFactory(chosenSpeciality);
 
-        String chosenGender = (String)genderSpinner.getSelectedItem();
-        Gender gender = Gender.genderFactory(chosenGender);
-/*
-        ArrayList<String> doctorsWithSameSpeciality;
-        .orderByChild("speciality").equalTo(speciality).orderByChild("gender").equalTo(gender);
-        FirebaseDatabase.getInstance().getReference().child("users").orderByChild("speciality").equalTo( speciality.getIntValue() ).
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        })
-*/
         return true;
     }
 
