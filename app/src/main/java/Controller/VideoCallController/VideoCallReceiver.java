@@ -15,5 +15,27 @@ public class VideoCallReceiver extends AbstractVideoCall {
         super(currentActivity, apiID);
     }
 
+    public Appointment getAppointment() {
+        return appointment;
+    }
 
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public void setChannelName(String channelName) {
+        this.channelName = channelName;
+    }
 }
